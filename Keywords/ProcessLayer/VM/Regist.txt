@@ -1,0 +1,66 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Regist vCenter
+    [Arguments]    @{IN_vCenter}
+    View Menu    ${VM_reg_menu}    2    ${VM_menu}
+    Wait and Click Element    ${VMreg_add_btn}
+    Wait Until Element Is Visible    ${VMreg_mod_title}
+    Select From List    ${VMreg_type_cobox}    @{IN_vCenter}[0]
+    Run Keyword If    "@{IN_vCenter}[0]"=="OpenStack"    Input Text    ${VMreg_proj_tbox}    @{IN_vCenter}[4]
+    Run Keyword If    '@{IN_vCenter}[0]'=='Hyper-V'    Input Text    ${VMreg_ip_tbox}    @{IN_vCenter}[1]
+    ...    ELSE    Regist_Input    @{IN_vCenter}
+    Wait and Click Element    ${VMreg_submit_btn}
+    Wait Element    ${VMreg_content_txt}    60
+    ${status}    Run Keyword and Return Status    Element Should Contain    ${VMreg_content_txt}    注册成功
+    Run Keyword If    ${status}    Click Element    ${VMreg_complete_btn}
+    Run Keyword Unless    ${status}    fail    注册失败
+
+Regist_Input
+    [Arguments]    @{IN_vCenter}
+    Input Text    ${VMreg_ip_tbox}    @{IN_vCenter}[1]
+    Input Text    ${VMreg_unm_tbox}    @{IN_vCenter}[2]
+    Input Text    ${VMreg_pwd_tbox}    @{IN_vCenter}[3]
+
+Authorize vCenter
+    [Arguments]    ${IN_type}
+    sleep    2
+    Wait and Click Element    ${VM_menu}
+    sleep    2
+    ${status}    Run Keyword and Return Status    Element Should Not Be Visible    ${LICENSE_menu}
+    Run Keyword If    ${status}    Click Element    ${MORE_menu}
+    View Menu    ${LICENSE_auth_menu}    2    ${LICENSE_menu}
+    Wait and Click Element    ${LICENSES_auth_VM_tab}
+    sleep    1
+    Select From List    ${LICENSES_auth_plat_cobox}    ${IN_type}
+    Wait Until Element Is Visible    ${VMreg_ele_visiable}
+    Wait and Click Element    ${LICENSES_auth_all_chbox}
+    Wait and Click Element    ${LICENSES_auth_go_btn}
+    Wait and Click Element    ${LICENSES_auth_trial_chbox}
+    Wait and Click Element    ${LICENSES_auth_submit_btn}
+    Wait Element    ${LICENSES_auth_complete_txt}    60
+    ${status}    Run Keyword and Return Status    Element Should Contain    ${LICENSES_auth_complete_txt}    授权成功
+    Run Keyword If    ${status}    Click Element    ${LICENSES_auth_complete_btn}
+    Run Keyword Unless    ${status}    fail    授权失败
+
+Authorize Resource
+    [Arguments]    ${IN_host}
+    Run Keyword And Ignore Error    Wait Element    ${RESOURCE_menu}    3
+    ${status}    Run Keyword and Return Status    Element Should Not Be Visible    ${RESOURCE_menu}
+    Run Keyword If    ${status}    Click Element    ${MORE_menu}
+    View Menu    ${RESOURCE_resource_menu}    2    ${RESOURCE_menu}
+    Wait and Click Element    ${RESOURCE_rsc_list_item}//span[text()="${IN_host}"]
+    Wait and Click Element    ${RESOURCE_rsc_auth_btn}
+    Wait and Click Element    ${RESOURCE_rsc_grp_cobox}
+    Select Checkbox    ${RESOURCE_rsc_all_chbox}
+    Wait and Click Element    ${RESOURCE_rsc_submit_btn}
+
+Authorize Group Resource
+    sleep    2
+    ${status}    Run Keyword and Return Status    Element Should Not Be Visible    ${USER_menu}
+    Run Keyword If    ${status}    Click Element    ${MORE_menu}
+    View Menu    ${USER_group_menu}    2    ${USER_menu}
+    Click Element    ${USERgrp_resource_item}
+    ${value}    Get Element Attribute    ${USERgrp_resource_chbox}[@name="selectAll"]@checked
+    Run Keyword If    '{value}'!='None'    Select Checkbox    ${USERgrp_resource_chbox}

@@ -1,0 +1,7 @@
+*** Variables ***
+${WINbak_retention_tbox}    xpath=//*[@id='wos_backup_retation_policy']/div/input
+${WINbak_retention_cobox}    xpath=//*[@id='wos_backup_retation_policy']/div/select
+${WINbak_speed_tbox}    xpath=//*[@id='wos_backup_max_transport_spend']/div/div/input
+${WINbak_dedup_chbox}    xpath=//*[@id='wos_backup_repeat_data_delete']/div/input
+${WINbak_valid_chbox}    xpath=//*[@id='wos_backup_validData']/div/input
+${WINbak_taskName_tbox}    xpath=//*[@id='wos_backup_task_name']

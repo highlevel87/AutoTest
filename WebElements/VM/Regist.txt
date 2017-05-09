@@ -1,0 +1,12 @@
+*** Variables ***
+${VMreg_add_btn}    xpath=.//*[@id='vm_register_info']
+${VMreg_mod_title}    xpath=//*[@id='reg_modal_title']
+${VMreg_ele_visiable}    xpath=//*[@id='btable']//td[2]
+${VMreg_type_cobox}    xpath=.//*[@id='vm_datacenter_register_reg_vm_type']//select
+${VMreg_ip_tbox}    xpath=.//*[@id='ip']
+${VMreg_unm_tbox}    xpath=.//*[@id='vm_datacenter_register_username']
+${VMreg_pwd_tbox}    xpath=.//*[@id='password']
+${VMreg_proj_tbox}    xpath=.//*[@id='vm_datacenter_tenant_name_input']
+${VMreg_submit_btn}    xpath=.//*[@id='vm_datacenter_register_reg_ok']
+${VMreg_content_txt}    css=.dialog-content
+${VMreg_complete_btn}    css=.btn.btn-primary.dialog-ok.popup-modal-dismiss

@@ -1,0 +1,9 @@
+*** Variables ***
+${WINbak_immediate_chbox}    xpath=//*[@id='wos_backup_immed_exceute']/div/input
+${WINbak_once_chbox}    xpath=//*/form/div[2]/div/input[1]    # 一次性作业
+${WINbak_once_starttime_item}    xpath=//*[@id='bt_datetimepicker_vm_back_start_time']
+${WINbak_time_chbox}    xpath=//*/form/div[2]/div/input[2]    # 时间策略
+${WINbak_full_item}    xpath=//*[@id='headingOne']
+${WINbak_full_submit_btn}    xpath=//*[@id='vm_backup_time_policy_full_ok']
+${WINbak_diff_item}    xpath=//*[@id='headingTwo']
+${WINbak_diff_submit_btn}    xpath=//*[@id='vm_backup_time_policy_diff_ok']

@@ -1,0 +1,16 @@
+*** Variables ***
+@{linuxPartitions}    sdb2    sdb3    yj-data1    yj-data2
+@{winPartitions}    D    E
+@{realTimeMode}    0    # 实时
+@{CDPMode}        1    7    # CDP-保留7天
+@{defaultPoolOptions}    ${CDPbak_immediate_chbox}    # 立即启动-默认存储
+@{localPoolOptions}    ${CDPbak_time_chbox}    ${CDPbak_local_chbox}    # 定时启动-本地存储
+@{dedupPoolOptions}    ${CDPbak_time_chbox}    ${CDPbak_dedup_chbox}    # 定时启动-重删
+@{linuxLocalBackup}    @{linuxPartitions}    @{CDPMode}    @{localPoolOptions}    #linux选择分区-cdp模式-存储方式;备份到本地池
+@{linuxDedupBackup}    @{linuxPartitions}    @{CDPMode}    @{dedupPoolOptions}    #linux选择分区-CDP模式-存储方式;备份到重删池
+@{linuxDefaultBackup}    @{linuxPartitions}    @{CDPMode}    @{defaultPoolOptions}    #linux选择分区-备份模式-存储方式;备份到存储池
+@{linuxRealBackup}    @{linuxPartitions}    @{realTimeMode}    ${CDPbak_time_chbox}    #linux选择分区-实时模式-定时启动
+@{winLocalBackup}    @{winPartitions}    @{CDPMode}    @{localPoolOptions}    #win选择分区-备份模式-存储方式;备份到本地池
+@{winDedupBackup}    @{winPartitions}    @{CDPMode}    @{dedupPoolOptions}    #win选择分区-备份模式-存储方式;备份到重删池
+@{winDefaultBackup}    @{winPartitions}    @{CDPMode}    @{defaultPoolOptions}    #win选择分区-备份模式-存储方式;备份到存储池
+@{winRealBackup}    @{winPartitions}    @{realTimeMode}    ${CDPbak_time_chbox}    #win选择分区-实时模式-定时启动

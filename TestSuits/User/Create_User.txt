@@ -1,0 +1,33 @@
+*** Settings ***
+Suite Teardown    Close All Browsers
+Resource          ../../Keywords/HeadFile/HeadFile.txt
+
+*** Variables ***
+@{Users}          yj    yx    zc    zjl    ljl    sj
+
+*** Test Cases ***
+Initial Users
+    Login    admin    admin    192.168.2.170
+    Create Users    @{Users}
+    View Menu    ${USER_group_menu}    2    ${USER_menu}
+    Run Keyword And Ignore Error    Wait Element    ${USERgrp_user_item}    5
+    ${status}    Run Keyword And Return Status    Element Should Be Visible    ${USERgrp_user_item}
+    Run Keyword Unless    ${status}    Create Group
+    Run Keyword If    ${status}    Set Group
+    sleep    3
+
+Login Admin
+    Login    admin    admin    192.168.2.78
+
+Create Users
+    Create Users    @{Users}
+
+Create Or Set Group
+    View Menu    ${USER_group_menu}    2    ${USER_menu}
+    Run Keyword And Ignore Error    Wait Element    ${USERgrp_user_item}    5
+    ${status}    Run Keyword And Return Status    Element Should Be Visible    ${USERgrp_user_item}
+    Run Keyword Unless    ${status}    Create Group
+    Run Keyword If    ${status}    Set Group
+
+Sleep
+    sleep    3

@@ -1,0 +1,15 @@
+*** Settings ***
+Library           CustomLibrary
+
+*** Keywords ***
+Linux_operation
+    [Arguments]    ${ip}    ${user}    ${password}    ${command}
+    [Documentation]    | 描述 | 用于执行linux命令 |
+    ...    | 参数 | ${stdout} ：输出返回值 |
+    ...    | \ | ${stderr}：错误返回值 |
+    ...    | \ | ${ip}：IP地址 |
+    ...    | \ | ${user}：用户名 |
+    ...    | \ | ${password}：用户密码 |
+    ...    | \ | ${command}：待执行命令 |
+    ${stdout}    ${stderr}    Linux Command    ${ip}    ${user}    ${password}    ${command}
+    [Return]    ${stdout}    ${stderr}

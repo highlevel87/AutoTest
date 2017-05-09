@@ -1,0 +1,36 @@
+*** Settings ***
+Resource          ../../../Keywords/HeadFile/HeadFile.txt
+Resource          H3C.txt
+
+*** Test Cases ***
+Login ljl
+    Login    ljl    dingjia123    192.168.2.99
+    [Teardown]
+
+Create PT Backup Job
+    Create VM Backup Job    H3C普通    @{listnormal}
+    [Teardown]    Teardown
+
+Create CS Backup Job
+    Create VM Backup Job    H3C重删    @{listdelete}
+    [Teardown]    Teardown
+
+Create Morevm Backup Job
+    Create VM Backup Job    H3C多机    @{listmore}
+    [Teardown]    Teardown
+
+Create OnceIM Backup Job
+    Create VM Backup Job    H3COnce    @{listonceim}
+    [Teardown]    Teardown
+
+Create Once Backup Job
+    Create VM Backup Job    H3COnce    @{listonce}
+    [Teardown]    Teardown
+
+Create Mount Backup Job
+    Create VM Backup Job    H3C挂载    @{listmount}
+    [Teardown]    Teardown
+
+*** Keywords ***
+Teardown
+    Close All Browsers

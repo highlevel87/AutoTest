@@ -1,0 +1,18 @@
+*** Settings ***
+Resource          Options.txt
+
+*** Variables ***
+@{hostsnormal}    Linux_nor1    Linux_nor2
+@{hostscompress}    Linux_Com1    Linux_Com2
+@{hostsdelete}    Linux_Delete1    Linux_Delete2
+@{hostssan}       Linux_san1    Linux_san2
+@{hostsmore}      Linux_more1    Linux_more2    Linux_more3    Linux_more4
+@{hostsonceim}    Linux_onceim1    Linux_onceim2
+@{hostsonce}      Linux_once1    Linux_once2
+@{listnormal}     FusionCompute    ${hostsnormal}    ${strategy04}    ${retention-Day2}    ${speed-Default}    ${transMode-Default}    ${options-Default}
+@{listcompress}    FusionCompute    ${hostscompress}    ${strategy04}    ${retention-Day2}    ${speed-Default}    ${transMode-Default}    ${options-ys}
+@{listdelete}     FusionCompute    ${hostsdelete}    ${strategy04}    ${retention-Num3}    ${speed-Default}    ${transMode-Network}    ${options-cs}
+@{listmore}       FusionCompute    ${hostsmore}    ${strategy04}    ${retention-Num3}    ${speed-Default}    ${transMode-Network}    ${options-Default}
+@{listsan}        FusionCompute    ${hostssan}    ${strategy04}    ${retention-Num3}    ${speed-Default}    ${transMode-SAN}    ${options-Default}
+@{listonceim}     FusionCompute    ${hostsonceim}    ${strategy03}    ${retention-Default}    ${speed-Default}    ${transMode-Network}    ${options-Default}
+@{listonce}       FusionCompute    ${hostsonceim}    ${strategy05}    ${retention-Default}    ${speed-Default}    ${transMode-Network}    ${options-Default}

@@ -1,0 +1,5 @@
+*** Variables ***
+${VMRestore_autoopen_chbox}    xpath=.//*[@id='vm_restore_auto_open_host']//input
+${VMRestore_netlab_chbox}    xpath=.//*[@id='vm_restore_net_lable']//input
+${VMRestore_transmode}    xpath=.//*[@id='vm_restore_data_transport_model']//select
+${VMRestore_trans_speed}    xpath=.//*[@id='vm_restore_max_detail_spend']//input

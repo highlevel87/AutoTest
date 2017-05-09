@@ -1,0 +1,20 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Create VM Restore Job
+    [Arguments]    ${IN_backuptime}    ${restore_taskName}=''    @{restore_list}
+    View Menu    ${VM_res_menu}    2    ${VM_menu}
+    Select Restore Type    @{restore_list[0]}
+    Comment    Next
+    Select Restore Source    ${restore_list[1]}    ${IN_backuptime}
+    Next
+    Set Restore Config    @{restore_list[2]}
+    sleep    1
+    Next
+    Set Restore Strategy    @{restore_list[3]}
+    Next
+    Wait Until Element Is Visible    xpath=.//*[@id='normal_target_host_div']
+    Run Keyword Unless    "${restore_taskName}"==""    Input Text    ${VMRestore_taskname_chbox}    ${restore_taskName}
+    Submit
+    Click Complete Button

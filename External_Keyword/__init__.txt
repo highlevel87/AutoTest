@@ -1,0 +1,2 @@
+*** Settings ***
+Documentation     | 描述 | 用于存放外置库自定义关键字 |

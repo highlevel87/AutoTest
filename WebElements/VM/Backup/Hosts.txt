@@ -1,0 +1,2 @@
+*** Variables ***
+${VMbak_hosts_chbox}    xpath=//*[@id='vm_host_resouse_tree']    # 需要传host名

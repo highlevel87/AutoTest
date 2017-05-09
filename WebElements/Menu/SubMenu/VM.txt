@@ -1,0 +1,7 @@
+*** Variables ***
+${VM_reg_menu}    css=a.menu-level-2[href="vm-data-center-register.html"]
+${VM_task_menu}    css=a.menu-level-2[href="vm-task-current.html"]
+${VM_bak_menu}    css=a.menu-level-2[href="vm-backup.html"]
+${VM_res_menu}    css=a.menu-level-2[href="vm-restore.html"]
+${VM_manager_menu}    css=a.menu-level-2[href="vm-timepoint-manager.html"]
+${VM_mount_menu}    css=a.menu-level-2[href="vm-mount-point.html"]

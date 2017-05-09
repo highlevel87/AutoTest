@@ -1,0 +1,12 @@
+*** Variables ***
+@{disk_default}    # 默认勾选
+@{disks01}        1    H :    1    unkown    0    D :    # 磁盘名-分区名
+@{strategy01}     ${WINbak_immediate_chbox}    ${WINbak_time_chbox}    ${WINbak_full_item}    ${WINbak_full_submit_btn}    # 立即-时间策略-默认完备启动时间
+@{list111}        192.168.2.75    ${disk_default}    ${strategy01}
+@{retention00}
+@{retention01}    15    2    # num-mode(1:个数，2:天数)
+${speed00}        ${EMPTY}
+${speed01}        11
+@{option01}       ${WINbak_dedup_chbox}    ${WINbak_valid_chbox}
+@{options001}     ${retention01}    ${speed01}    ${option01}
+@{list101001}     192.168.2.12    ${disk_default}    ${strategy01}    ${options001}    # 一次性-立即启动-重删-压缩-只保留

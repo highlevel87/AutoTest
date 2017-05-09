@@ -1,0 +1,71 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Select Restore Type
+    [Arguments]    @{restore_type}
+    [Documentation]    | 描述 | 设置恢复类型及虚拟化平台选择 |
+    ...    | 参数1 | 恢复类型：“整机恢复”、“原机文件级恢复”、“数据挂载恢复”、“挂载式异机文件级恢复” |
+    ...    | 参数2 | 虚拟化平台类型：VMware、Xen、KVM、Hyper-V、Citrix XenServer、FusionCompute、H3C CAS、OpenStack、CNware |
+    Wait and Click Element    ${VMRestore_type}[contains(text(),'@{restore_type}[0]')]
+    Wait and Click Element    ${VMRestore_vCenter_type}[text()='@{restore_type}[1]']
+
+Select Restore Source
+    [Arguments]    ${resource_vm}    ${source_num}
+    [Documentation]    | 描述 | 选择恢复源（备份点） |
+    ...    | 参数1 | 备份点对应的虚拟机名 |
+    ...    | 参数2 | 虚拟机的第几个备份点 |
+    Wait and Click Element    ${VMRestore_source_chbox}[text()='${resource_vm}']/parent::a/parent::li/ul/li[${source_num}]/span[2]
+
+Set Restore Config
+    [Arguments]    @{config_list}
+    [Documentation]    | 描述 | 设置恢复目标机 |
+    ...    | 参数 | 恢复目标宿主机：“本宿主机”、“其他宿主机” |
+    Run Keyword If    '@{config_list}[0]'=='本宿主机'    Set Restore Current Host    @{config_list}
+    ...    ELSE    Set Restore Other Host    @{config_list}
+
+Set Restore Current Host
+    [Arguments]    @{config_list}
+    [Documentation]    | 描述 | 设置本宿主机的虚拟机恢复类型 |
+    ...    | 参数1 | 虚拟机恢复类型：1-原虚拟机，2-新建虚拟机 |
+    Wait and Click Element    ${VMRestore_config_set}[text()='@{config_list}[0]']
+    Wait Until Element Is Visible    ${VMRestore_localhost}
+    Run Keyword Unless    '@{config_list}[1]'=='1'    Click Element    ${VMRestore_vm_type} [@value='@{config_list}[1]']
+    Run Keyword Unless    '@{config_list}[1]'=='2'    Set Restore Other VM    @{config_list}
+
+Set Restore Other VM
+    [Arguments]    @{config_list}
+    [Documentation]    | 描述 | 设置本宿主机新建虚拟机恢复配置 |
+    ...    | 参数1 | 选择恢复目标存储池，用法“LocalStorage” |
+    ...    | 参数2 | 为恢复目标机创建别名 |
+    ...    | 参数3 | Hyper-V虚拟机恢复目标目录，用法“\\test” |
+    sleep    1
+    Run Keyword Unless    '@{config_list}[2]'==''    select from list    ${VMRestore_choise_storage}    @{config_list}[2]
+    Run Keyword Unless    '@{config_list}[3]'==''    Input Text    ${VMRestore_vmnm}    @{config_list}[3]
+    Run Keyword Unless    '@{config_list}[4]'==''    Input Text    ${VMRestore_dir}    @{config_list}[4]
+
+Set Restore Other Host
+    [Arguments]    @{config_list}
+    [Documentation]    | 描述 | 设置其他宿主机新建虚拟机恢复配置 |
+    ...    | 参数1 | 选择恢复目标宿主机 |
+    ...    | 参数2 | 选择恢复目标机ip，用法“192.168.2.191” |
+    ...    | 参数3 | 选择恢复目标存储池，用法“LocalStorage” |
+    ...    | 参数4 | 为恢复目标虚拟机创建别名 |
+    ...    | 参数5 | 选择恢复目标虚拟机恢复目录，用法“\\test” |
+    Wait and Click Element    ${VMRestore_config_set}[text()='@{config_list}[0]']
+    select from list    ${VMRestore_other_host}    @{config_list}[1]
+    sleep    1
+    Run Keyword Unless    '@{config_list}[2]'==''    select from list    ${VMRestore_oth_choise_storage}    @{config_list}[2]
+    Run Keyword Unless    '@{config_list}[3]'==''    Input Text    ${VMRestore_other_vmnm}    @{config_list}[3]
+    Run Keyword Unless    '@{config_list}[4]'==''    Input Text    ${VMRestore_dir}    @{config_list}[4]
+
+Set Restore Strategy
+    [Arguments]    @{selections}
+    Click Elements    @{selections}
+
+Set Restore Options
+    [Arguments]    @{options}
+    Run Keyword if    '@{options}[0]'=='yes'    Click Element    ${VMRestore_autoopen_chbox}
+    Run Keyword If    '@{options}[1]'=='yes'    Click Element    ${VMRestore_netlab_chbox}
+    Run Keyword Unless    '@{options}[2]'==''    Select From List    ${VMRestore_transmode}    @{options}[2]
+    Run Keyword Unless    '@{options}[3]'==''    Input Text    ${VMRestore_trans_speed}    @{options}[3]

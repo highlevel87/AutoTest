@@ -1,0 +1,4 @@
+*** Variables ***
+${LICENSE_auth_menu}    css=a.menu-level-2[href="plat-client-authorizing.html"]
+${LICENSE_request_menu}    css=a.menu-level-2[href="licenses-request.html"]
+${LICENSE_license_menu}    css=a.menu-level-2[href="licenses.html"]

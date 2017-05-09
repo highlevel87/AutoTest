@@ -1,0 +1,10 @@
+*** Settings ***
+Library           Selenium2Library
+Library           SSHLibrary
+Library           OperatingSystem
+Library           DatabaseLibrary
+Resource          ../../WebElements/WebElementHeadFile.txt
+Resource          ../FunctionLayer/FunctionLayerHeadFile.txt
+Resource          ../ProcessLayer/ProcessLayerHeadFile.txt
+Library           String
+Resource          ../../External_Keyword/ExternalHeadFile.txt

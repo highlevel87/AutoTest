@@ -1,0 +1,8 @@
+*** Variables ***
+${LICENSES_Req_next_btn}    css=#btn_guide_next
+${LICENSES_Req_numset_tbox}    css=#txt_licenses_default_num
+${LICENSES_Req_module_cobox}    xpath=.//*[@id='page_licenses_request_main']//div[1]/div/select[1]
+${LICENSES_Req_submodule_cobox}    xpath=.//*[@id='page_licenses_request_main']/div[1]/div/div[3]/div/div[1]/div[1]/div/div/div/button
+${LICENSES_Req_all_chbox}    xpath=.//*[@id='page_licenses_request_main']/div[1]/div/div[3]/div/div[1]/div[1]/div/div/div/div/ul/li[1]/label/input
+${LICENSES_Req_add_btn}    xpath=.//*[@id='page_licenses_request_main']/div[1]/div/div[3]/div/div[1]/div[1]/div/div/button[1]
+${LICENSES_Req_submit_btn}    xpath=.//*[@id='page_licenses_request_main']/div[2]/div/button[1]

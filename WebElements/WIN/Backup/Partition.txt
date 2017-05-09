@@ -1,0 +1,4 @@
+*** Variables ***
+${WINbak_partition_chbox}    xpath=//*[@id='wos_backup_tree']    # 选择备份目标机
+${WINbak_recMode_cobox}    xpath=//*[@id='type_surpport']
+${WINbak_mountVM_cobox}    xpath=//*[@id='wos_mount_value']

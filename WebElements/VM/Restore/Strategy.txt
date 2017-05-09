@@ -1,0 +1,6 @@
+*** Variables ***
+${VMRestore_immediate_chbox}    xpath=.//*[@id='vm_restore_immed_execute']//input
+${VMRestore_once_chbox}    xpath=.//*[@id='Immediatestart']
+${VMRestore_time_chbox}    xpath=.//*[@id='selecttime']
+${VMRestore_timeselect}    xpath=.//*[@id='full_back_title_desc']
+${VMRestore_submit_btn}    xpath=.//*[@id='vm_backup_time_policy_full_ok']

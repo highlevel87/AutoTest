@@ -1,0 +1,18 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Create Windows Backup Job
+    [Arguments]    ${IN_taskName}=''    @{IN_options}
+    View Menu    ${WIN_bak_menu}    2    ${WIN_menu}
+    Select Windows Host    ${IN_options[0]}
+    ${status}=    Run Keyword and Return Status    Should Not Be Empty    ${IN_options[1]}
+    Run Keyword If    ${status}    Select Windows Partitions    ${IN_options[1]}
+    Next
+    Set Windows Strategy    @{IN_options[2]}
+    Next
+    Set Windows Backup Option    @{IN_options[3]}
+    Next
+    sleep    2
+    Run Keyword Unless    "${IN_taskName}"==""    Input Text    ${WINbak_taskName_tbox}    ${IN_taskName}
+    Submit

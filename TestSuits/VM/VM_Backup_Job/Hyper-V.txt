@@ -1,0 +1,18 @@
+*** Settings ***
+Resource          Options.txt
+
+*** Variables ***
+@{hostsnormal}    Linux_nor1    Linux_nor2
+@{hostscompress}    Linux_com1    Linux_com2
+@{hostsdelete}    Linux_delete1    Linux_delete2
+@{hostsmount}     Linux_mount1    Linux_mount2
+@{hostsmore}      Linux_more1    Linux_more2
+@{hostsonceim}    Linux_onceim1    Linux_onceim2
+@{hostsonce}      Linux_once1    Linux_once2
+@{listnormal}     Hyper-V    ${hostsnormal}    ${strategy04}    ${retention-Day2}    ${speed-Default}    ${transMode-Default}    ${options-Default}
+@{listcompress}    Hyper-V    ${hostscompress}    ${strategy04}    ${retention-Num3}    ${speed-Default}    ${transMode-Default}    ${options-ys}
+@{listdelete}     Hyper-V    ${hostsdelete}    ${strategy04}    ${retention-Day2}    ${speed-Default}    ${transMode-Default}    ${options-cs}
+@{listmore}       Hyper-V    ${hostsmore}    ${strategy04}    ${retention-Num3}    ${speed-Default}    ${transMode-Default}    ${options-Default}
+@{listmount}      Hyper-V    ${hostsmount}    ${strategy04}    ${retention-Day2}    ${speed-Default}    ${transMode-Default}    ${options-gz}
+@{listonceim}     Hyper-V    ${hostsonceim}    ${strategy03}    ${retention-Default}    ${speed-Default}    ${transMode-Default}    ${options-Default}
+@{listonce}       Hyper-V    ${hostsonce}    ${strategy05}    ${retention-Default}    ${speed-Default}    ${transMode-Default}    ${options-Default}

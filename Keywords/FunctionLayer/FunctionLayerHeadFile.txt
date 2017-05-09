@@ -1,0 +1,9 @@
+*** Settings ***
+Resource          Login.txt
+Resource          Menu.txt
+Resource          Common/Functions.txt
+Resource          VM/Backup.txt
+Resource          CDP/Backup.txt
+Resource          WIN/Backup.txt
+Resource          User/Group.txt
+Resource          VM/Restore.txt

@@ -1,0 +1,3 @@
+*** Variables ***
+${CDP_bak_menu}    css=a.menu-level-2[href="cdp-backup.html"]
+${CDP_task_menu}    css=a.menu-level-2[href="cdp-task-current.html"]

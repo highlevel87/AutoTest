@@ -1,0 +1,30 @@
+*** Settings ***
+Suite Teardown    Close Browser
+Resource          ../../../Keywords/HeadFile/HeadFile.txt
+Resource          KVM.txt
+
+*** Test Cases ***
+Login zc-53
+    Login    zc    dingjia123    192.168.2.177    chrome
+
+Create PT Job
+    Create VM Backup Job    KVM95普通-立即-时间-2天    @{KVM001}
+
+Create YS Job
+    Create VM Backup Job    KVM95压缩-时间-3个    @{KVM002}
+
+Create CS Job
+    Create VM Backup Job    KVM95重删-立即-一次性    @{KVM003}
+
+mysql
+    [Documentation]    | DS_TS_UNKOWN | \ \ | 0 |
+    ...    | DS_TS_CREATED | //新建 | 1 |
+    ...    | DS_TS_RUNNING | //正在运行 | 2 |
+    ...    | DS_TS_STOP | //停止 | 3 |
+    ...    | DS_TS_WAIT | //等待 | 4 |
+    ...    | DS_TS_PAUSE | //暂停 | 5 |
+    ...    | DS_TS_ERROR | //出错 | 6 |
+    ...    | DS_TS_NETWORK | //网络故障（允许启动断点续传） | 7 |
+    ...    | DS_TS_STOPPING | //正在停止 | 8 |
+    ${backuptime}=    Wait and Get Backup Datetime    192.168.2.79    KVMtestmysql
+    log    ${backuptime[0][0]}

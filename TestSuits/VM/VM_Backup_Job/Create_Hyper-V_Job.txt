@@ -1,0 +1,40 @@
+*** Settings ***
+Resource          ../../../Keywords/HeadFile/HeadFile.txt
+Resource          Hyper-V.txt
+
+*** Test Cases ***
+Login ljl
+    Login    ljl    dingjia123    192.168.2.99
+    [Teardown]
+
+Create PT Backup Job
+    Create VM Backup Job    Hyper-V普通    @{listnormal}
+    [Teardown]    Teardown
+
+Create YS Backup Job
+    Create VM Backup Job    Hyper-V压缩    @{listcompress}
+    [Teardown]    Teardown
+
+Create CS Backup Job
+    Create VM Backup Job    Hyper-V重删    @{listdelete}
+    [Teardown]    Teardown
+
+Create Morevm Backup Job
+    Create VM Backup Job    Hyper-V多机    @{listmore}
+    [Teardown]    Teardown
+
+Create OnceIM Backup Job
+    Create VM Backup Job    Hyper-VOnce    @{listonceim}
+    [Teardown]    Teardown
+
+Create Once Backup Job
+    Create VM Backup Job    Hyper-VOnce    @{listonce}
+    [Teardown]    Teardown
+
+Create Mount Backup Job
+    Create VM Backup Job    Hyper-V 挂载    @{listmount}
+    [Teardown]    Teardown
+
+*** Keywords ***
+Teardown
+    Close All Browsers

@@ -1,0 +1,2 @@
+*** Variables ***
+${WINbak_host_item}    xpath=//*[@id='wos_back_source_item']    # 选择备份目标机

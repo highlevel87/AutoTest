@@ -1,0 +1,40 @@
+*** Settings ***
+Resource          ../../../Keywords/HeadFile/HeadFile.txt
+Resource          FusionCompute.txt
+
+*** Test Cases ***
+Login ljl
+    Login    ljl    dingjia123    192.168.2.99
+    [Teardown]
+
+Create PT Backup Job
+    Create VM Backup Job    Fusion普通    @{listnormal}
+    [Teardown]    Teardown
+
+Create YS Backup Job
+    Create VM Backup Job    Fusion压缩    @{listcompress}
+    [Teardown]    Teardown
+
+Create CS Backup Job
+    Create VM Backup Job    Fusion重删    @{listdelete}
+    [Teardown]    Teardown
+
+Create Morevm Backup Job
+    Create VM Backup Job    Fusion多机    @{listmore}
+    [Teardown]    Teardown
+
+Create San Backup Job
+    Create VM Backup Job    FusionSAN    @{listsan}
+    [Teardown]    Teardown
+
+Create OnceIM Backup Job
+    Create VM Backup Job    FusionOnceIM    @{listonceim}
+    [Teardown]    Teardown
+
+Create Once Backup Job
+    Create VM Backup Job    FusionOnce    @{listonce}
+    [Teardown]    Teardown
+
+*** Keywords ***
+Teardown
+    Close All Browsers

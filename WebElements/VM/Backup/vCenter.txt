@@ -1,0 +1,2 @@
+*** Variables ***
+${VMbak_vcenter_items}    xpath=.//*[@id='vm_backup_choise_host_event']    # 通用

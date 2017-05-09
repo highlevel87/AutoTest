@@ -1,0 +1,54 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Create cluster
+    [Arguments]    ${cluster_name}    ${qdisk}    ${System_type}    ${System_version}
+    [Documentation]    | 描述 | 该关键字用于创建高可用集群 |
+    ...    | 参数 | ${cluster_name}：集群名称 |
+    ...    | \ | ${qdisk}：仲裁盘 |
+    ...    | \ | ${System_type}：系统类型 |
+    ...    | \ | ${System_version}：系统版本 |
+    Click Element    xpath=//*[@id='cluster']
+    Wait Element    xpath=//*[@id='reg_modal_title']
+    Input Text    cluster_name    ${cluster_name}    #输入集群名称
+    Click Element    xpath=//*[@id='choise_qdisk']/option[text()='${qdisk}']    #选择仲裁盘
+    Click Element    xpath=//*[@id='select_system_type']/option[contains(text(),'${System_type}')]    #选择操作系统类型
+    Click Element    xpath=//*[@id='select_host_model']/option[contains(text(),'${System_version}')]    #选择操作系统版本
+    Click Element    xpath=//*[@id='btn_submit_user']
+    Wait Element    xpath=//div[contains(text(),'集群创建成功')]
+    Click Element    xpath=//button
+    Wait Element    xpath=//*[@id='storage_devices_summary']/div/div[1]/h3
+
+Add host
+    [Arguments]    ${cluster_name}    @{AllHost}
+    [Documentation]    | 描述 | 该关键字用于添加高可用主机 |
+    ...    | 参数 | ${cluster_name}：集群名称 |
+    ...    | \ | @{AllHost}：待添加主机列表 |
+    Click Element    xpath=//*[@id='add_host']
+    Wait Element    xpath=//*[@id='reg_modal_title'][contains(text(),'添加主机')]
+    #选择集群
+    Comment    Click_Elements    xpath=//*[@id='choise_cluster_by_create_host']
+    Click Element    xpath=//*[@id='choise_cluster_by_create_host']/option[text()='${cluster_name}']
+    #选择主机
+    Click Element    xpath=//*[@id='show_ha_popver_info_choise_host']/div[1]/h4/a
+    : FOR    ${host}    IN    @{AllHost}
+    \    Click Element    xpath=//div[@class='panel-body']/ul/li[@class='list-group-item']/label/span[contains(text(),'${host}')]/parent::label/input
+    Click Element    xpath=//*[@id='btn_submit_host']
+    Wait Element    xpath=//div[contains(text(),'添加主机成功')]    60
+    Click Element    xpath=//button
+
+Add Qdisk
+    [Arguments]    ${qdisk}
+    [Documentation]    | 描述 | 该关键字用于添加仲裁盘 |
+    ...    | 参数 | ${qdisk}：仲裁盘名称 |
+    Click Element    xpath=//*[@id='qdisk']
+    Wait Element    xpath=//*[@id='add_disk']
+    Click Element    xpath=//*[@id='add_disk']
+    Wait Element    xpath=//*[@id='show_add_disk']/label[contains(text(),'仲裁盘')]
+    Click Element    xpath=//*[@id='select_disk']
+    Click Element    xpath=//*[@id='select_disk']/option[contains(text(),'${qdisk}')]
+    Click Element    xpath=//*[@id='addQdisk']
+    Wait Element    xpath=//div[contains(text(),'添加仲裁盘成功')]
+    Click Element    xpath=//button
+    Wait and Click Element    xpath=//*[@id='q_disk_modal']/div/div/div[3]/a[contains(text(),'关闭')]

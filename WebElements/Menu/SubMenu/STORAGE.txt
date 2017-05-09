@@ -1,0 +1,2 @@
+*** Variables ***
+${STORAGE_Pool_menu}    css=.menu-level-2[href="storage-pool.html"]

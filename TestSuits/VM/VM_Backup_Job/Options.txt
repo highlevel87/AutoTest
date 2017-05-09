@@ -1,0 +1,20 @@
+*** Variables ***
+@{strategy01}     ${VMbak_immediate_chbox}    ${VMbak_time_chbox}    ${VMbak_onlyfull_chbox}    ${VMbak_full_item}    ${VMbak_full_submit_btn}    # 立即-时间策略-不保留快照-默认完备启动时间
+@{strategy02}     ${VMbak_immediate_chbox}    ${VMbak_time_chbox}    ${VMbak_full_item}    ${VMbak_full_submit_btn}    # 立即-时间策略-默认完备启动时间
+@{strategy03}     ${VMbak_immediate_chbox}    ${VMbak_once_chbox}    # 立即-一次性
+@{strategy04}     ${VMbak_time_chbox}    ${VMbak_full_item}    ${VMbak_full_submit_btn}    # 时间策略-默认完备启动时间
+@{strategy05}     ${VMbak_once_chbox}    # 一次性
+@{options-Default}    # 默认
+@{options-qp}     ${VMbak_fullscan_chbox}    # 全盘扫描
+@{options-cs}     ${VMbak_dedup_chbox}    # 重删
+@{options-gz}     ${VMbak_mount_chbox}    # 挂载
+@{options-ys}     ${VMbak_compress_chbox}    # 压缩
+@{retention-Default}    # 默认保留策略
+@{retention-Day2}    2    2    # 2-天
+@{retention-Num3}    3    1    # 3-个
+${speed-Default}    \    # 不限速
+${transMode-Default}    \    # 默认/空
+${transMode-Network}    2    # 网络传输模式
+${transMode-Encrytion}    3    # 网络文件加密
+${transMode-SAN}    4    # SAN传输
+${transMode-Adaption}    6    # 自适应

@@ -1,0 +1,14 @@
+*** Variables ***
+@{VMware58}       VMware    192.168.2.91    root    vmware
+@{VMware73}       VMware    192.168.2.186    root    dingjia@123
+@{VMware91}       VMware    192.168.2.91    root    dingjia
+@{VMware186}      VMware    192.168.2.186    root    dingjia123
+@{VMware247}      VMware    192.168.2.247    administrator@vCenter.SSO    Dingjia@123
+@{Xen79}          Xen    192.168.2.79    root    dingjia
+@{KVM95}          KVM    192.168.2.95    root    dingjia
+@{CNware252}      CNware    192.168.2.252    root    dingjia
+@{XenServer90}    Citrix XenServer    192.168.2.90    root    dingjia
+@{FusionCompute57}    FusionCompute    192.168.2.57    dingjia    Dingjia@123
+@{Hyper-V17}      Hyper-V    192.168.2.17    504
+@{H3C149}         H3C CAS    192.168.2.149    admin    admin
+@{OpenStack178}    OpenStack    192.168.2.178    admin    dingjia    admin

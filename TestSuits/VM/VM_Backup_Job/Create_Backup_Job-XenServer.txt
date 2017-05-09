@@ -1,0 +1,20 @@
+*** Settings ***
+Suite Teardown    Close Browser
+Resource          ../../../Keywords/HeadFile/HeadFile.txt
+Resource          Options-XenServer.txt
+
+*** Test Cases ***
+Login yx-78
+    Login    yx    dingjia123    192.168.2.79    chrome
+
+Login yx-170
+    Login    yx    dingjia123    192.168.2.170    chrome
+
+Login yx-53
+    Login    zc    dingjia123    192.168.2.177    chrome
+
+Create PT Job
+    Create VM Backup Job    XenServer90普通-立即-时间-2天    @{XenServer001}
+
+Create CS Job
+    Create VM Backup Job    XenServer90重删-立即一次性    @{XenServer002}

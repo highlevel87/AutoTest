@@ -1,0 +1,18 @@
+*** Settings ***
+Resource          ../../../Keywords/HeadFile/HeadFile.txt
+
+*** Variables ***
+@{restore_list}    ${type_list}    ${source_list}    ${config_list}    ${strategy_list}
+@{type_list}      整机恢复    FusionCompute
+${source_list}    Linux_more1
+@{config_list}    其他宿主机    192.168.2.191    LocalStorage    new2
+@{strategy_list}    ${VMRestore_time_chbox}    ${VMRestore_timeselect}    ${VMRestore_submit_btn}
+
+*** Test Cases ***
+Login_ljl
+    Login    yj    dingjia123    192.168.2.79
+
+Create_Fusion_Restore_yj
+    ${backuptime}=    Wait and Get Backup Datetime    192.168.2.79    testautorestore
+    Create VM Restore Job    ${backuptime[0][0]}    testautorestore    @{restore_list}
+    [Teardown]    Close All Browsers

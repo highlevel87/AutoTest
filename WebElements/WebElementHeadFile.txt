@@ -1,0 +1,37 @@
+*** Settings ***
+Resource          Menu/MainMenu.txt    # 主菜单
+Resource          Menu/SubMenu/VM.txt    # 子菜单
+Resource          Menu/SubMenu/CDP.txt    #CDP子菜单
+Resource          Menu/SubMenu/WIN.txt    #Windows子菜单
+Resource          Menu/SubMenu/HA.txt
+Resource          Menu/SubMenu/USER.txt
+Resource          Menu/SubMenu/RESOURCE.txt
+Resource          Menu/SubMenu/LICENSE.txt
+Resource          Menu/SubMenu/STORAGE.txt
+Resource          User/Create_User.txt
+Resource          User/Group.txt
+Resource          HomePage/Login.txt
+Resource          HomePage/Others.txt
+Resource          VM/Regist.txt
+Resource          VM/Backup/vCenter.txt
+Resource          VM/Backup/Hosts.txt
+Resource          VM/Backup/Strategy.txt
+Resource          VM/Backup/Options.txt
+Resource          CDP/Backup/HostMachine.txt
+Resource          CDP/Backup/Partition.txt
+Resource          CDP/Backup/Options.txt
+Resource          WIN/Backup/Host.txt
+Resource          WIN/Backup/Partition.txt
+Resource          WIN/Backup/Strategy.txt
+Resource          WIN/Backup/Options.txt
+Resource          License/Authorization.txt
+Resource          License/Request.txt
+Resource          License/License.txt
+Resource          Resource/Resource.txt
+Resource          Resource/Storage.txt
+Resource          VM/Restore/Type.txt
+Resource          VM/Restore/Source.txt
+Resource          VM/Restore/TargetMachine.txt
+Resource          VM/Restore/Strategy.txt
+Resource          VM/Restore/Complete.txt
+Resource          VM/Restore/Options.txt

@@ -1,0 +1,15 @@
+*** Settings ***
+Documentation     | @{strategy01} | 立即-时间策略-不保留快照-默认完备启动时间 |
+...               | @{strategy02} | 立即-时间策略-默认完备启动时间 |
+...               | @{strategy03} | 立即-一次性 |
+...               | @{strategy04} | 时间策略-默认完备启动时间 |
+...               | @{strategy05} | 一次性 |
+Resource          Options.txt
+
+*** Variables ***
+@{hosts-pt}       Xen-Test    # 普通
+@{hosts-cs}       Xen-Test-cs    # 重删
+@{Xen001}         Xen    ${hosts-pt}    ${strategy02}    ${retention-Day2}    ${speed-Default}    ${transMode-Default}    ${options-Default}
+...               # Xen91普通-立即-时间-2天
+@{Xen002}         Xen    ${hosts-cs}    ${strategy03}    ${retention-Default}    ${speed-Default}    ${transMode-Default}    ${options-cs}
+...               # Xen91重删-立即一次性

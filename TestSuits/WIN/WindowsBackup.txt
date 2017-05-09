@@ -1,0 +1,91 @@
+*** Settings ***
+Resource          ../../Keyword/HeadFile/HeadFile.txt
+Library           CustomLibrary
+
+*** Variables ***
+
+*** Test Cases ***
+WindowsBackup
+    Login_scutech    192.168.2.53    zc    dingjia123
+    Click_Elements    ${main_windows}
+    Wait_Until_Element_Appear    ${sub_wos_backup}
+    Click_Elements    ${sub_wos_backup}
+    ${AllDisk}    Create List    D    L
+    Create_Windows_Task    192.168.2.13    兼容模式恢复    loop    ${Element_Reserved_Number}    15    50
+    ...    deduplication    yes    zhujianlin    @{AllDisk}
+
+test
+    Login_scutech    192.168.2.79    zjl    dingjia123
+    Sleep    5
+    Click Element    ${main_windows}
+    Sleep    5
+    Click Element    ${sub_wos_job}
+    Sleep    5
+    Click Element    ${sub_wos_backup}
+    Sleep    5
+    Click Element    ${sub_wos_restore}
+    Sleep    10
+    Close All Browsers
+
+WindowsRestore_origin
+    Login_scutech    192.168.2.53    zc    dingjia123
+    Click_Elements    ${main_windows}
+    Wait_Until_Element_Appear    ${sub_wos_restore}
+    Click_Elements    ${sub_wos_restore}
+    Select_restore_type    普通恢复
+    Select_restore_resource    DJOSR131355114
+    Select_restore_time_point    不重建    2017-04-05 09:29:06
+    Select_target_machine    192.168.2.246
+    Wait_Until_Element_Appear    ${Restore_start_policy_lable}
+    Comment    Run Keyword If    '${Restore_launch_strategy}'=='立即启动'    Click_Elements    xpath=//*[@id='wos_restore_start_policy']/div/select/option[1]
+    ...    ELSE IF    '${Restore_launch_strategy}'=='定时启动'    Click_Elements    xpath=//*[@id='wos_restore_start_policy']/div/select/option[2]    ${EMPTY}
+    ...    ELSE    log    error
+    Click_Elements    ${Restore_start_immediate}
+    Comment    sleep    3
+    Comment    Input Text    xpath=//*[@id='wos_restore_transport_spend']//input    1024
+    Click_Elements    ${Next}
+    Restore_complete    原机恢复
+    Wait_Until_Element_Appear    ${Restore_sure}
+    sleep    2
+    Click_Elements    ${Restore_sure}
+
+WindowsRestore_rebuild
+    Login_scutech    192.168.2.53    zc    dingjia123
+    Click_Elements    ${main_windows}
+    Wait_Until_Element_Appear    ${sub_wos_restore}
+    Click_Elements    ${sub_wos_restore}
+    Select_restore_type    普通恢复
+    Select_restore_resource    DJOSR131355114
+    Select_restore_time_point    重建    2017-04-05 09:29:06
+
+*** Keywords ***
+Select_restore_type
+    [Arguments]    ${restore_type}
+    Wait_Until_Element_Appear    xpath=.//*[@id='wos_restore_type_ul']//a/span[contains(text(),'${restore_type}')]
+    Click_Elements    xpath=.//*[@id='wos_restore_type_ul']//a/span[contains(text(),'${restore_type}')]
+
+Select_restore_resource
+    [Arguments]    ${Choose_source}    # choose restore sourece host name
+    Wait_Until_Element_Appear    xpath=.//*[@id='wos_resotre_back_source_item']//a/span[contains(text(),'${Choose_source}')]
+    Click_Elements    xpath=.//*[@id='wos_resotre_back_source_item']//a/span[contains(text(),'${Choose_source}')]
+
+Select_restore_time_point
+    [Arguments]    ${Rebiuld_choose}    ${Select_point}
+    Wait_Until_Element_Appear    ${Not_rebuild}
+    Run Keyword If    '${Rebiuld_choose}' == '不重建'    Click_Elements    ${Not_rebuild}
+    ...    ELSE IF    '${Rebiuld_choose}' == '重建'    Click_Elements    ${Rebiuld}
+    ...    ELSE    log    error
+    Click_Elements    xpath=//*[@id='wos_restore_tree']//a[contains(@title,'${Select_point}')]/parent::li/span[2]
+    Click_Elements    ${Next}
+
+Select_target_machine
+    [Arguments]    ${target_host_IP}
+    Wait_Until_Element_Appear    xpath=//*[@id='wos_resotre_source_item']//span[contains(text(),'${target_host_IP}')]
+    Click_Elements    xpath=//*[@id='wos_resotre_source_item']//span[contains(text(),'${target_host_IP}')]
+
+Restore_complete
+    [Arguments]    ${Restore_task_name}
+    sleep    3
+    Input Text    ${Wos_Restore_taskname}    ${Restore_task_name}
+    Wait_Until_Element_Appear    ${Restore_complete_wait_element}
+    Click_Elements    ${Next}

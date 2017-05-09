@@ -1,0 +1,29 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Create Group
+    [Arguments]    ${IN_groupName}=test
+    Wait and Click Element    ${USERgrp_new_btn}
+    Wait Element    ${USERgrp_new_name_tbox}    5
+    Input Text    ${USERgrp_new_name_tbox}    ${IN_groupName}
+    Click Element    ${USERgrp_new_pool_item}
+    Select Checkbox    ${USERgrp_new_pool_chbox}
+    Click Element    ${USERgrp_new_resource_item}
+    Select Checkbox    ${USERgrp_new_resource_chbox}
+    Click Element    ${USERgrp_new_user_item}
+    Select Checkbox    ${USERgrp_new_user_chbox}
+    Click Element    ${USERgrp_new_submit_btn}
+    Wait Element    ${USERgrp_user_item}    10
+
+Set Group
+    Wait Element    ${USERgrp_user_item}    10
+    Click Element    ${USERgrp_user_item}
+    ${value}    Get Element Attribute    ${USERgrp_user_chbox}[@name="selectAll"]@checked
+    run keyword if    '${value}'=='None'    Select Checkbox    ${USERgrp_user_chbox}
+    Click Element    ${USERgrp_resource_item}
+    ${value}    Get Element Attribute    ${USERgrp_resource_chbox}[@name="selectAll"]@checked
+    run keyword if    '${value}'=='None'    Select Checkbox    ${USERgrp_resource_chbox}
+    Click Element    ${USERgrp_pool_item}
+    ${value}    Get Element Attribute    ${USERgrp_pool_chbox}[@name="selectAll"]@checked
+    run keyword if    '${value}'=='None'    Select Checkbox    ${USERgrp_pool_chbox}

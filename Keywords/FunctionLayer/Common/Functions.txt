@@ -1,0 +1,154 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Variables ***
+
+*** Keywords ***
+Wait Element
+    [Arguments]    ${IN_ele}    ${IN_timeout}=20
+    [Documentation]    | 描述 | 等待页面元素出现 |
+    ...    | 参数1 | 页面元素 |
+    ...    | 可选参数2 | 超时时间，默认20s |
+    Wait Until Element Is Visible    ${IN_ele}    timeout=${IN_timeout}
+
+Wait and Click Element
+    [Arguments]    ${IN_ele}    ${IN_timeout}=20
+    [Documentation]    | 描述 | 等待页面元素出现，并点击该元素 |
+    ...    | 参数1 | 页面元素 |
+    ...    | 可选参数2 | 超时时间，默认20s |
+    Wait Element    ${IN_ele}    ${IN_timeout}
+    Click Element    ${IN_ele}
+
+Next
+    [Documentation]    | 描述 | 创建作业过程中，点击下一步按钮 |
+    ...    | 参数 | 无参数 |
+    Wait and Click Element    ${next_btn}
+
+Click Elements
+    [Arguments]    @{IN_elements}
+    [Documentation]    | 描述 | 点击提交传入列表中的所有元素 |
+    ...    | 参数 | @列表 |
+    : FOR    ${element}    IN    @{IN_elements}
+    \    Wait and Click Element    ${element}
+
+Submit
+    [Documentation]    | 描述 | 创建作业完成页面，点击提交按钮 |
+    ...    | 参数 | 无参数 |
+    Wait and Click Element    ${submit_btn}
+
+stop ha task
+    [Arguments]    ${ha_task_name}
+    Wait and Click Element    xpath=//*[@id='btable']/tbody/tr/td/a[contains(text(),'${ha_task_name}')]/parent::td/parent::tr/td/a[@class="mr10 ctrl-stop"]    #停止作业
+
+start ha task
+    [Arguments]    ${ha_task_name}
+    Wait and Click Element    xpath=//*[@id='btable']/tbody/tr/td/a[contains(text(),'${ha_task_name}')]/parent::td/parent::tr/td/a[@class="mr10 ctrl-start"]    #开始作业
+
+delete ha task
+    [Arguments]    ${ha_task_name}
+    Wait and Click Element    xpath=//*[@id='btable']/tbody/tr/td/a[contains(text(),'${ha-task_name}')]/parent::td/parent::tr/td/a[@class="mr10 ctrl-delete"]    #删除作业
+
+Operation ha task
+    [Arguments]    ${type}    ${ha_task_name}
+    [Documentation]    | 描述 | 对高可用作业执行启动、停止、删除操作 |
+    ...    | 参数 | ${type}：start stop delete |
+    ...    | \ | ${vm_task_name}：作业名称 |
+    View Menu    ${HA_job_meun}    2    ${HA_menu}
+    Run Keyword If    '${type}' == 'start'    start ha task    ${ha_task_name}
+    ...    ELSE IF    '${type}' == 'stop'    stop ha task    ${ha_task_name}
+    ...    ELSE IF    '${type}' == 'delete'    delete ha task    ${ha_task_name}
+    ...    ELSE    log    error
+
+delete wos task
+    [Arguments]    ${wos_task_name}
+    [Documentation]    | 描述 | 对windows作业执行启动、停止、删除操作 |
+    ...    | 参数 | ${type}：start stop delete |
+    ...    | \ | ${vm_task_name}：作业名称 |
+    Wait and Click Element    xpath=//*[@id='btable']/tbody/tr/td/a[contains(text(),'${wos_task_name}')]/parent::td/parent::tr/td/a[@class="mr10 ctrl-delete"]
+    Click Element    xpath=//button
+
+Operation wos task
+    [Arguments]    ${type}    ${wos_task_name}
+    View Menu    ${WIN_task_menu}    2    ${WIN_menu}
+    Run Keyword If    '${type}' == 'start'    start wos task    ${wos_task_name}
+    ...    ELSE IF    '${type}' == 'stop'    stop wos task    ${wos_task_name}
+    ...    ELSE IF    '${type}' == 'delete'    delete wos task    ${wos_task_name}
+    ...    ELSE    log    error
+
+stop wos task
+    [Arguments]    ${wos_task_name}
+    Wait and Click Element    xpath=//*[@id='btable']/tbody/tr/td/a[contains(text(),'${wos_task_name}')]/parent::td/parent::tr/td/a[@class="mr10 ctrl-stop"]
+
+start wos task
+    [Arguments]    ${wos_task_name}
+    Wait and Click Element    xpath=//*[@id='btable']/tbody/tr/td/a[contains(text(),'${wos_task_name}')]/parent::td/parent::tr/td/a[@class="mr10 ctrl-start"]
+
+start cdp task
+    [Arguments]    ${cdp_task_name}
+    Wait and Click Element    xpath=//*[@id='btable']/tbody/tr/td/a[contains(text(),'${cdp_task_name}')]/parent::td/parent::tr/td/a[@class="mr10 ctrl-start"]    #开始作业
+
+stop cdp task
+    [Arguments]    ${cdp_task_name}
+    Wait and Click Element    xpath=//*[@id='btable']/tbody/tr/td/a[contains(text(),'${cdp_task_name}')]/parent::td/parent::tr/td/a[@class="mr10 ctrl-stop"]
+
+delete cdp task
+    [Arguments]    ${cdp_task_name}
+    Wait and Click Element    xpath=//*[@id='btable']/tbody/tr/td/a[contains(text(),'${cdp_task_name}')]/parent::td/parent::tr/td/a[@class="mr10 ctrl-delete"]
+
+Operation cdp task
+    [Arguments]    ${type}    ${cdp_task_name}
+    [Documentation]    | 描述 | 对cdp作业执行启动、停止、删除操作 |
+    ...    | 参数 | ${type}：start stop delete |
+    ...    | \ | ${vm_task_name}：作业名称 |
+    View Menu    ${CDP_task_menu}    2    ${CDP_menu}
+    Run Keyword If    '${type}' == 'start'    start cdp task    ${cdp_task_name}
+    ...    ELSE IF    '${type}' == 'stop'    stop cdp task    ${cdp_task_name}
+    ...    ELSE IF    '${type}' == 'delete'    delete cdp task    ${cdp_task_name}
+    ...    ELSE    log    error
+
+Operation vm task
+    [Arguments]    ${type}    ${vm_task_name}
+    [Documentation]    | 描述 | 对虚拟机作业执行启动、停止、删除操作 |
+    ...    | 参数 | ${type}：start stop delete |
+    ...    | \ | ${vm_task_name}：作业名称 |
+    View Menu    ${VM_task_menu}    2    ${VM_menu}
+    Run Keyword If    '${type}' == 'start'    start vm task    ${vm_task_name}
+    ...    ELSE IF    '${type}' == 'stop'    stop vm task    ${vm_task_name}
+    ...    ELSE IF    '${type}' == 'delete'    delete vm task    ${vm_task_name}
+    ...    ELSE    log    error
+
+delete vm task
+    [Arguments]    ${vm_task_name}
+    Wait and Click Element    xpath=//*[@id='btable']/tbody/tr/td/a[contains(text(),'${vm_task_name}')]/parent::td/parent::tr/td/a[@class="mr10 ctrl-delete"]
+    Click Element    xpath=//button
+
+stop vm task
+    [Arguments]    ${vm_task_name}
+    Wait and Click Element    xpath=//*[@id='btable']/tbody/tr/td/a[contains(text(),'${vm_task_name}')]/parent::td/parent::tr/td/a[@class="mr10 ctrl-stop"]
+
+start vm task
+    [Arguments]    ${vm_task_name}
+    Wait and Click Element    xpath=//*[@id='btable']/tbody/tr/td/a[contains(text(),'${vm_task_name}')]/parent::td/parent::tr/td/a[@class="mr10 ctrl-start"]    #开始作业
+
+Win Choose File
+    [Arguments]    ${IN_path}    ${IN_filename}
+    [Documentation]    | 描述 | 利用AutoItLibrary，选择文件 |
+    ...    | 参数1 | 文件路径，注意用2个'\\'’符号隔开，路径无需以'\\'结尾 |
+    ...    | 参数2 | 文件名 |
+    Win Wait    打开
+    Win Activate    打开
+    sleep    1
+    Control Set Text    \    \    Edit1    ${IN_path}\\${IN_filename}
+    sleep    1
+    Control Click    \    \    Button1
+
+Connect_To_Databases
+    [Arguments]    ${Database_type}    ${user}    ${password}    ${host}
+    Connect To Database Using Custom Params    ${Database_type}    user='${user}', password='${password}', host='${host}',port=3306
+
+testrestore
+    [Arguments]    ${IN_taskid}    ${IN_name}
+    #需要更改
+    ${backuptime}=    Find Latest BackupTime    ${IN_taskid}
+    View Menu    ${VM_manager_menu}    2    ${VM_menu}
+    select checkbox    css=.//*[@id='vm_time_point_tree']//span[text()="${IN_name}"]/parent::a/parent::li//span[contains(text(), "${backuptime}")]/parent::a/parent::li/span[2]

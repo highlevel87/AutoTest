@@ -1,0 +1,36 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+View Menu
+    [Arguments]    ${IN_menu}    ${IN_level}=1    ${IN_firstlevel_menu}=null
+    [Documentation]    | 描述 | 打开1级或2级菜单 |
+    ...    | 参数1 | 目标菜单（1级或2级菜单） |
+    ...    | 参数2 | 参数1对应的菜单等级（1或2） |
+    ...    | 可选参数3 | 若参数1为1级菜单，则本参数为空；若参数1为2级菜单，则本参数为参数1的父菜单 |
+    ...
+    ...    范例：
+    ...    | View Menu | 一级菜单 | 1 |
+    ...    | View Menu | 二级菜单 | 2 | 一级菜单 |
+    Run Keyword If    '${IN_level}' == '1'    View Main Menu    ${IN_menu}
+    Run Keyword If    '${IN_level}' == '2'    View Sub Menu    ${IN_firstlevel_menu}    ${IN_menu}
+
+Wait and Get Backup Datetime
+    [Arguments]    ${IN_host}    ${IN_taskname}
+    [Documentation]    | 功能 | 在创建备份作业后调用，实现判断作业状态并做操作： |
+    ...    | \ | 1.运行中，则继续循环判断； |
+    ...    | \ | 2.等待运行，则返回备份时间点； |
+    ...    | \ | 3.出错，则报错 |
+    ...    | 参数1 | 迪备IP |
+    ...    | 参数2 | 作业名 |
+    ...    | 说明： | 其他模块待验证 |
+    Connect To Databases    pymysql    auto    dingjia    ${IN_host}
+    Query    use ds_db;
+    : FOR    ${times}    IN RANGE    100
+    \    Sleep    10
+    \    ${result}    Query    select id,name,module_type,task_type,status from ds_task where is_deleted=0 and name='${IN_taskname}';
+    \    Run Keyword If    "${result[0][4]}"=='2'    Continue For Loop
+    \    Run Keyword If    "${result[0][4]}"=='4'    Run Keyword and Return    Query    select backup_time from ds_backup_point where task_id=${result[0][0]} ORDER BY backup_time DESC;
+    \    Run Keyword If    "${result[0][4]}"=='6'    Fail    作业状态有误，当前作业状态码为"${qqq[0][4]}"
+    \    Fail    task status code is ${result[0][4]}
+    Fail    作业超时

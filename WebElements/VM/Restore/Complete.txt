@@ -1,0 +1,2 @@
+*** Variables ***
+${VMRestore_taskname_chbox}    xpath=.//*[@id='taskname']

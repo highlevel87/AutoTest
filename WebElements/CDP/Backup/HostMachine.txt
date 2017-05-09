@@ -1,0 +1,3 @@
+*** Variables ***
+${CDPbak_hostType_item}    xpath=//*[@id='hostTypeList']    #主机
+${CDPbak_host_item}    xpath=//*[@id='resourseHostList']    #目标主机

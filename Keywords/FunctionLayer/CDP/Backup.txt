@@ -1,0 +1,30 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Select CDP Host
+    [Arguments]    ${IN_type}    ${IN_host}
+    [Documentation]    说明：选择CDP备份主机操作；第一个参数为平台类型，第二个参数为主机IP。
+    ...
+    ...    用法：
+    ...    | Select CDP Host | Linux | 192.168.2.237 | #选择Linux平台对应IP的主机 |
+    ...    | Select CDP Host | Windows | 192.168.2.236 | #选择Windows平台对应IP的主机 |
+    Wait and Click Element    ${CDPbak_hostType_item}//span[contains(text(),'${IN_type}')]
+    Wait and Click Element    ${CDPbak_host_item}//span[contains(text(),'${IN_host}')]
+
+Select CDP Partitions
+    [Arguments]    @{IN_partitions}
+    [Documentation]    说明：选择CDP备份主机的分区；传入参数为分区名列表
+    ...    \ \ \ \ \ \ （模糊匹配，请保证输入分区名无其他前缀相同分区，
+    ...    \ \ \ \ \ 如：存在sda1，sda2，请输入sda2，输入sda会导致测试失败）。
+    ...
+    ...    用法：
+    ...    | Select CDP Partitions | @{Partitions} |
+    : FOR    ${partition}    IN    @{IN_partitions}
+    \    Wait and Click Element    ${CDPbak_partition_chbox}//span[contains(text(),'${partition}')]/parent::a/parent::li/span[2]
+
+Select CDP Backup Mode
+    [Arguments]    @{IN_mode}
+    Wait Element    ${CDPbak_bakmode_cobox}
+    Select From List    ${CDPbak_bakmode_cobox}    @{IN_mode}[0]
+    Run Keyword If    "@{IN_mode}[0]"=='1'    Input Text    ${CDPbak_retetion_tbox}    @{IN_mode}[1]

@@ -1,0 +1,87 @@
+*** Settings ***
+Suite Teardown    Close All Browsers
+Resource          ../../../Keywords/HeadFile/HeadFile.txt
+Resource          Regist_Hosts.txt
+
+*** Test Cases ***
+Login yx-auto
+    [Tags]    auto    VMware    Xen    KVM    XenServer    CNware
+    Login    yx    dingjia123    ${host}    ff
+    Comment    ${host}
+
+Regist VMware91
+    [Tags]    VMware1
+    Regist vCenter    @{VMware91}
+    Authorize vCenter    VMware
+    Authorize Resource    192.168.2.91
+
+Regist VMware247
+    Login    sj    dingjia123    192.168.2.79    chrome
+    Regist vCenter    @{VMware247}
+    Authorize vCenter    @{VMware247}[0]
+    Authorize Resource    @{VMware247}[1]
+
+Regist VMware186
+    [Tags]    VMware
+    Regist vCenter    @{VMware186}
+    Authorize vCenter    @{VMware186}[0]
+    Authorize Resource    @{VMware186}[1]
+
+Regist Xen79
+    [Tags]    Xen
+    Regist vCenter    @{Xen79}
+    Authorize vCenter    Xen
+    sleep    3
+    Authorize Resource    192.168.2.79
+
+Regist CNware252
+    Regist vCenter    @{CNware252}
+    Click Element    ${VM_menu}
+    Authorize vCenter    CNware
+    Authorize Resource    192.168.2.252
+
+Regist XenServer90
+    Regist vCenter    @{XenServer90}
+    Authorize vCenter    @{XenServer90}[0]
+    Authorize Resource    @{XenServer90}[1]
+
+Login zc-170
+    Login    zc    dingjia123    192.168.2.170    chrome
+
+Regist KVM95
+    Regist vCenter    @{KVM95}
+    Authorize vCenter    @{KVM95}[0]
+    Authorize Resource    @{KVM95}[1]
+
+Scroll
+    Open Browser    http://www.stackoverflow.com/    Chrome
+    Execute JavaScript    window.scrollTo(0, document.body.scrollHeight)
+    Input Text    //*[@id="search"]/input    robot framework
+    Sleep    3
+    [Teardown]    Close All Browsers
+
+Login ljl
+    Login    ljl    dingjia123    192.168.2.53
+    [Teardown]
+
+Regist FusionCompute57
+    Regist vCenter    @{FusionCompute57}
+    Authorize vCenter    @{FusionCompute57}[0]
+    [Teardown]
+
+Regist Hyper-V17
+    Regist vCenter    @{Hyper-V17}
+    Authorize vCenter    @{Hyper-V17}[2]
+    [Teardown]
+
+Regist H3C149
+    Regist vCenter    @{H3C149}
+    Authorize vCenter    @{H3C149}[0]
+    [Teardown]
+
+Regist OpenStack178
+    Regist vCenter    @{OpenStack178}
+    Authorize vCenter    @{OpenStack178}[0]
+    [Teardown]    Close All Browsers
+
+*** Keywords ***

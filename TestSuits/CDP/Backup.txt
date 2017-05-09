@@ -1,0 +1,19 @@
+*** Settings ***
+Suite Teardown
+Test Teardown
+Resource          ../../Keywords/HeadFile/HeadFile.txt
+Resource          Options.txt
+
+*** Test Cases ***
+Login yj
+    Login    yj    dingjia123    192.168.2.53    chrome
+
+Create Backup Task
+    Create CDP Backup Job    Linux    192.168.2.52    linuxlocalcdp1    @{linuxRealBackup}
+
+tttt
+    log Many    @{lists0001[2]}
+    log Many    @{Options001}
+
+Create Real Backup Task
+    Create CDP Backup Job    Linux    192.168.2.52    linuxlocalcdp1    @{linuxRealBackup}

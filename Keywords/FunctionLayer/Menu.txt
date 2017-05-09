@@ -1,0 +1,81 @@
+*** Settings ***
+Resource          ../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Menu Should Match
+    [Arguments]    ${IN_menu}    ${IN_menu_current}
+    [Documentation]    用途：
+    ...    1.对比指定菜单与当前展开或选择的菜单是否为同一个菜单。有返回值，返回True表示为同个菜单，False表示为不同的菜单。
+    ...    2.判断二级菜单是否为展开或选择状态，有返回值，处于展开或选择状态，返回True，处于未选择状态，返回False。locator的css中必须有href。
+    ...
+    ...    范例：
+    ...
+    ...    | Menu Should Match | ${menu} | ${current_menu} |
+    # href_of_menu 为一个url
+    ${url_of_current_menu}    Get Element Attribute    ${IN_menu_current}@href
+    @{url_list}    Split String    ${url_of_current_menu}    /
+    # href为url最后的html文件
+    ${href}    Set Variable    @{url_list}[-1]
+    # 菜单CSS 中是否包含href
+    ${status}    Run Keyword And Return Status    Should Contain    ${IN_menu}    ${href}
+    [Return]    ${status}
+
+Get Main Menu Status
+    [Arguments]    ${IN_menu}
+    [Documentation]    用途：获取一级菜单的状态，有返回值，处于展开或选择状态，返回True，处于未选择状态，返回False。
+    ...
+    ...    范例：
+    ...
+    ...    | Get Main Menu Status | ${menu} |
+    Wait Element    ${IN_menu}
+    ${status}    Run Keyword And Return Status    Menu Should Match    ${IN_menu}    ${level1_actived_menu}
+    ${status}    Main Menu Should Open    ${IN_menu}
+    [Return]    ${status}
+
+Get Sub Menu Status
+    [Arguments]    ${IN_menu}
+    [Documentation]    用途：获取二级菜单的状态，有返回值，处于展开或选择状态，返回True，处于未选择状态，返回False。
+    ...
+    ...
+    ...    范例：
+    ...
+    ...    | Get Sub Menu Status | ${menu} |
+    ${status}    Menu Should Match    ${IN_menu}    ${level1_actived_menu}
+    ${match_result}    Run Keyword And Return If    ${status}    Menu Should Match    ${IN_menu}    ${level2_actived_menu}
+    ${status}    Set Variable If    '${match_result}' == 'None'    False    ${match_result}
+    [Return]    ${status}
+
+View Main Menu
+    [Arguments]    ${IN_menu}
+    [Documentation]    用途：选择（点击）一级菜单。首先判断一级菜单的状态，若处于展开或已选择状态，不做任何操作，若非展开或非选择，则选择（点击）一级菜单。
+    ...
+    ...    范例：
+    ...
+    ...    | View Main Menu | ${menu} |
+    ${status}    Get Main Menu Status    ${IN_menu}
+    Run Keyword If    '${status}'=='False'    Click Element    ${IN_menu}
+
+View Sub Menu
+    [Arguments]    ${IN_main_menu}    ${IN_sub_menu}
+    [Documentation]    用途：选择（点击）二级菜单。首先判断一级菜单的状态，若处于展开或已选择状态，不做任何操作，若非展开或非选择，则选择（点击）一级菜单。再判断二级菜单的状态，若处于已选择状态，不做任何操作，若非选择，则选择（点击）二级菜单。
+    ...
+    ...    范例：
+    ...
+    ...    | View Sub Menu | ${menu} | ${parent_menu} |
+    Sleep    3
+    ${parent_status}    Get Main Menu Status    ${IN_main_menu}
+    Run Keyword If    '${parent_status}'=='False'    Click Element    ${IN_main_menu}
+    Sleep    1
+    Wait Element    ${IN_sub_menu}
+    ${status}    Get Sub Menu Status    ${IN_sub_menu}
+    Run Keyword If    '${status}'=='False'    Click Element    ${IN_sub_menu}
+
+Main Menu Should Open
+    [Arguments]    ${IN_menu}
+    [Documentation]    用途：判断一级菜单是否为展开或选择状态，有返回值，处于展开或选择状态，返回True，处于未选择状态，返回False。locator的css中必须有class。
+    ...
+    ...    范例：
+    ...    | Main Menu Should Open | ${menu} |
+    ${locator_class}    Get Element Attribute    ${IN_menu}@class
+    ${status}    Run Keyword And Return Status    Should Contain    ${locator_class}    open
+    [Return]    ${status}

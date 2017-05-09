@@ -1,0 +1,16 @@
+*** Variables ***
+${USERgrp_new_btn}    xpath=.//*[@id='account-group-add']
+${USERgrp_new_name_tbox}    xpath=.//*[@id='txt_account_group_name']
+${USERgrp_new_user_item}    xpath=.//*[@id='add_account_group_modal']//div[2]//button
+${USERgrp_new_user_chbox}    xpath=.//*[@id='add_account_group_modal']//div[2]//div[2]//li[1]//input
+${USERgrp_new_resource_item}    xpath=.//*[@id='add_account_group_modal']//div[3]//button
+${USERgrp_new_resource_chbox}    xpath=.//*[@id='add_account_group_modal']//div[2]//div[3]//li[1]//input
+${USERgrp_new_pool_item}    xpath=.//*[@id='add_account_group_modal']//div[4]//button
+${USERgrp_new_pool_chbox}    xpath=.//*[@id='add_account_group_modal']//div[2]//div[4]//li[1]//input
+${USERgrp_new_submit_btn}    xpath=.//*[@id='btn_submit_account_group']
+${USERgrp_user_item}    xpath=.//*[@id='account_group_table']//tr[1]/td[2]//button
+${USERgrp_user_chbox}    xpath=.//*[@id='account_group_table']//tr[1]/td[2]//li[1]//input
+${USERgrp_resource_item}    xpath=.//*[@id='account_group_table']//tr[1]/td[3]//button
+${USERgrp_resource_chbox}    xpath=.//*[@id='account_group_table']//tr[1]/td[3]//li[1]//input
+${USERgrp_pool_item}    xpath=.//*[@id='account_group_table']//tr[1]/td[4]//button
+${USERgrp_pool_chbox}    xpath=.//*[@id='account_group_table']//tr[1]/td[4]//li[1]//input

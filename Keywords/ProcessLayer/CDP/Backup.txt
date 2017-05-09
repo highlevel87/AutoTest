@@ -1,0 +1,23 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Create CDP Backup Job
+    [Arguments]    ${IN_hostType}    ${IN_host}    ${IN_name}='Default'    @{options}
+    [Documentation]    功能：创建CDP备份作业；
+    ...    说明：
+    ...    备份模式0为实时，1为CDP；
+    ...    列表@{options}中存放2个子列表，第一个子列表为选择分区，第二个子列表为备份选项。
+    ...
+    ...    示例：
+    ...    | Create CDP Backup Job | 主机类型 | 主机ip | 作业名 | @{list} |
+    ...    | Create CDP Backup Job | Linux | 192.168.2.53 | CDP备份立即启动 | @{options} |
+    View Menu    ${CDP_bak_menu}    2    ${CDP_menu}
+    Select CDP Host    ${IN_hostType}    ${IN_host}
+    Select CDP Partitions    @{options[0]}
+    Next
+    Select CDP Backup Mode    @{options[1]}
+    Click Elements    @{options[2]}
+    Next
+    Run Keyword If    '${IN_name}'!='Default'    Input Text    ${CDPbak_taskname_tbox}    ${IN_name}
+    Submit

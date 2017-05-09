@@ -1,0 +1,14 @@
+*** Variables ***
+${LICENSES_auth_VM_tab}    xpath=//*[@id='cd_body_v6']/div[2]/ul/li[1]/a
+${LICENSES_auth_OS_tab}    xpath=//*[@id='cd_body_v6']/div[2]/ul/li[2]/a
+${LICENSES_auth_HA_tab}    xpath=//*[@id='cd_body_v6']/div[2]/ul/li[3]/a
+${LICENSES_auth_CDP_tab}    xpath=//*[@id='cd_body_v6']/div[2]/ul/li[4]/a
+${LICENSES_auth_plat_cobox}    xpath=//*[@id='cd_body_v6']/div[2]/ul/li[5]/select[1]
+${LICENSES_auth_status_cobox}    xpath=//*[@id='cd_body_v6']/div[2]/ul/li[5]/select[2]
+${LICENSES_auth_all_chbox}    xpath=//*[@id='home']/div[1]//div[1]//div[1]/input
+${LICENSES_auth_go_btn}    xpath=//*[@id='lucenses_authorizing_go']
+${LICENSES_auth_official_chbox}    xpath=//*[@id='completecheckbox']
+${LICENSES_auth_trial_chbox}    xpath=//*[@id='difcheckbox']
+${LICENSES_auth_submit_btn}    xpath=//*[@id='licenses_authorizing_choise_type_ok']
+${LICENSES_auth_complete_txt}    css=.dialog-content
+${LICENSES_auth_complete_btn}    css=.dialog-ok

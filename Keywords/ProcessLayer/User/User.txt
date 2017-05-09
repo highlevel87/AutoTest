@@ -1,0 +1,55 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Click Storage Regist Button
+    Wait and Click Element    ${RESOURCE_Sto_regist_btn}
+    Wait and Click Element    ${RESOURCE_Sto_submit_btn}
+
+Regist Storage
+    View Menu    ${RESOURCE_Storage_menu}    2    ${RESOURCE_menu}
+    Run Keyword and Ignore Error    Element Should Be Visible    ${RESOURCE_Sto_unreg_txt}    5
+    ${status}    Run Keyword and Return Status    Element Should Be Visible    ${RESOURCE_Sto_unreg_txt}
+    Run Keyword If    ${status}    Click Storage Regist Button
+    Wait Element    ${RESOURCE_Sto_registed_txt}
+
+Create Pool
+    [Arguments]    ${IN_type}    ${IN_IP}    ${IN_name}
+    View Menu    ${STORAGE_Pool_menu}    2    ${STORAGE_menu}
+    Wait and Click Element    css=.hint--bottom[href="#modal_add_pool_guide"]
+    Wait Element    css=#sel_storage_type_2
+    Select From List    css=#sel_storage_type_2    ${IN_type}
+    Input Text    css=#txt_ftp_address_2    ${IN_IP}
+    Wait and Click Element    css=#btn_guide_next
+    Sleep    3
+    Wait and Click Element    css=#btn_guide_next
+    Wait Element    css=#txt_pool_name_2
+    Input Text    css=#txt_pool_name_2    ${IN_name}
+    Wait and Click Element    css=.btn.btn-success
+    Wait Element    xpath=.//*[@id='table_storage_pool']//a[contains(text(), "${IN_name}")]
+
+Create Users
+    [Arguments]    @{IN_Users}    # ${IN_password}='dingjia123' | ${IN_email}='test@scutech.com' | ${IN_phone}='12312312312' |
+    View Menu    ${USER_user_menu}    2    ${USER_menu}
+    ${status}    Set Variable    False
+    Log    Start Creating Users...
+    : FOR    ${user}    IN    @{IN_Users}
+    \    Run Keyword Unless    ${status}    Wait and Click Element    ${USER_add_btn}
+    \    Wait Element    ${USER_unm_tbox}
+    \    Clear Element Text    ${USER_unm_tbox}
+    \    Input Text    ${USER_unm_tbox}    ${user}
+    \    Clear Element Text    ${USER_pwd_tbox}
+    \    Input Text    ${USER_pwd_tbox}    dingjia123
+    \    ${status}    Run Keyword And Return Status    Element Should Be Visible    ${USER_exist_err_txt}
+    \    Run Keyword If    ${status}    Continue For Loop
+    \    Input Text    ${USER_re_pwd_tbox}    dingjia123
+    \    Input Text    ${USER_email_tbox}    test@scutech.com
+    \    Input Text    ${USER_phone_tbox}    12312312312
+    \    Select Checkbox    ${USER_role_admin_chbox}
+    \    Select Checkbox    ${USER_role_monitor_chbox}
+    \    Select Checkbox    ${USER_role_user_chbox}
+    \    Click Element    ${USER_submit_btn}
+    \    Wait Element    xpath=.//*[@id='table_user']//td[text()='${user}']
+    \    sleep    1
+    ${status}    Run Keyword and Return Status    Wait Element    ${USER_cancel_btn}    5
+    Run Keyword If    ${status}    Click Element    ${USER_cancel_btn}

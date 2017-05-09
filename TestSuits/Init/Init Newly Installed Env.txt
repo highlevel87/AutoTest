@@ -1,0 +1,39 @@
+*** Settings ***
+Suite Teardown    Close All Browsers
+Resource          ../../Keywords/HeadFile/HeadFile.txt
+Library           AutoItLibrary
+
+*** Variables ***
+@{RequestMudules}    Linux x86    Windows    虚拟化平台    不区分平台
+@{Users}          yj    yx    zc    zjl    ljl    sj
+
+*** Test Cases ***
+SetLicense
+    ${path}=    Set Variable    C:\\Users\\yx\\Downloads
+    Remove File    ${path}\\license*
+    Login    admin    admin    ${host}
+    Get Request File    30    @{RequestMudules}
+    sleep    2
+    Move File    ${path}\\license-request_*    ${path}\\license-request
+    Get Key File    ${path}    license-request
+    sleep    15
+    Move File    ${path}\\license*.key    ${path}\\license.key
+    Login    admin    admin    ${host}
+    Upload Key File    ${path}    license.key
+    Sleep    5
+
+CreatePool
+    Login    admin    admin    192.168.2.82
+    Regist Storage
+    Create Pool    http    192.168.2.82    autotest
+    #    ${host}
+
+CreateUsers
+    Login    admin    admin    ${host}    chrome
+    Create Users    @{Users}
+    View Menu    ${USER_group_menu}    2    ${USER_menu}
+    Run Keyword And Ignore Error    Wait Element    ${USERgrp_user_item}    5
+    ${status}    Run Keyword And Return Status    Element Should Be Visible    ${USERgrp_user_item}
+    Run Keyword Unless    ${status}    Create Group
+    Run Keyword If    ${status}    Set Group
+    sleep    3

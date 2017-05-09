@@ -1,0 +1,13 @@
+*** Variables ***
+${VMbak_retention_tbox}    xpath=//*[@id='reserved_value']    # 保留数
+${VMbak_retention_cobox}    xpath=//*[@id='reserved_type']    # 保留方式
+${VMbak_speed_tbox}    xpath=//*[@id='vm_backup_max_transport_spend']/div/div/div/input    # 限速值
+${VMbak_transmode_cobox}    xpath=//*[@id='vm_backup_data_transport_model']/div/select    # 传输方式
+${VMbak_fullscan_chbox}    xpath=//*[@id='full_disk_scan']/div/input    # 全盘扫描
+${VMbak_compress_chbox}    xpath=//*[@id='vm_backup_backup_data_compress']/div/input    # 压缩
+${VMbak_mount_chbox}    xpath=//*[@id='vm_backup_strage_formart']/div/input    # 挂载
+${VMbak_dedup_chbox}    xpath=//*[@id='vm_backup_repeat_data_delete']/div/input    # 重删
+${VMbak_taskName_tbox}    xpath=//*[@id='vm_backup_task_name']    # 任务名
+${VMbak_pool_cobox}    xpath=//*[@id='vm_backup_choise_data_pool']/div/select    # 存储池
+${VMbak_complete_btn}    xpath=html/body/div[2]/div/div[1]/div/div/div[3]/button
+${VMbak_complete_tbox}    xpath=html/body/div[2]/div/div[1]/div/div/div[2]

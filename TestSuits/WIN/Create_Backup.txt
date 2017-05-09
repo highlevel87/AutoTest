@@ -1,0 +1,12 @@
+*** Settings ***
+Suite Teardown    close browser
+Resource          ../../Keywords/HeadFile/HeadFile.txt
+Resource          Options.txt
+
+*** Test Cases ***
+Login zc
+    Login    zc    dingjia123    ${host}    chrome
+
+Create Win08 Backup
+    [Documentation]    一行二列：作业名
+    Create Windows Backup Job    test1    @{list101001}

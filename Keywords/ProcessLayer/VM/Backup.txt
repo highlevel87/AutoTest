@@ -1,0 +1,28 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Create VM Backup Job
+    [Arguments]    ${IN_taskName}=""    @{IN_lists}
+    [Documentation]    | 描述 | 创建虚拟机备份作业 |
+    ...    | 参数1 | 作业名，置空则保持默认 |
+    ...    | 参数2 | @操作列表 |
+    View Menu    ${VM_bak_menu}    2    ${VM_menu}
+    Select vCenter    ${IN_lists[0]}
+    Select VM Hosts    @{IN_lists[1]}
+    Next
+    Set VM Strategy    @{IN_lists[2]}
+    Next
+    ${status}=    Run Keyword and Return Status    Should Not Be Empty    ${IN_lists[3]}
+    Run Keyword If    ${status}    Set VM Retention    @{IN_lists[3]}
+    Run Keyword Unless    "${IN_lists[4]}"==""    Input Text    ${VMbak_speed_tbox}    ${IN_lists[4]}
+    Run Keyword Unless    "${IN_lists[5]}"==""    Select From List    ${VMbak_transmode_cobox}    ${IN_lists[5]}
+    ${status}=    Run Keyword and Return Status    Should Not Be Empty    ${IN_lists[6]}
+    Run Keyword If    ${status}    Click Elements    @{IN_lists[6]}
+    ${status}=    Run Keyword and Return Status    Element Should Contain    XPATH=.//*[@id='vm_backup_choise_data_pool']/div/select    存储池加载中
+    Run Keyword If    ${status}    Sleep    10
+    Next
+    sleep    1
+    Run Keyword Unless    "${IN_taskName}"==""    Input Text    ${VMbak_taskName_tbox}    ${IN_taskName}
+    Submit
+    Click Complete Button

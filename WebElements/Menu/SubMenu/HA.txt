@@ -1,0 +1,3 @@
+*** Variables ***
+${HA_manage_meun}    css=a.menu-level-2.menu-link[href="ha-cluster-management.html"]
+${HA_job_meun}    css=a.menu-level-2.menu-link[href="ha-task-current.html"]

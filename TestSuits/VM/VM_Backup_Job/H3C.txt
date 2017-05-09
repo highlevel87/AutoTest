@@ -1,0 +1,16 @@
+*** Settings ***
+Resource          Options.txt
+
+*** Variables ***
+@{hostsnormal}    Linux_nor1    Linux_nor2
+@{hostsdelete}    Linux_delete1    Linux_delete2
+@{hostsmount}     Linux_mount1    Linux_mount2
+@{hostsmore}      Linux_more1    Linux_more2
+@{hostsonceim}    Linux_onceim1    Linux_onceim2
+@{hostsonce}      Linux_once1    Linux_once2
+@{listnormal}     H3C    ${hostsnormal}    ${strategy04}    ${retention-Day2}    ${speed-Default}    ${transMode-Default}    ${options-Default}
+@{listdelete}     H3C    ${hostsdelete}    ${strategy04}    ${retention-Num3}    ${speed-Default}    ${transMode-Default}    ${options-cs}
+@{listmore}       H3C    ${hostsmore}    ${strategy04}    ${retention-Day2}    ${speed-Default}    ${transMode-Default}    ${options-Default}
+@{listmount}      H3C    ${hostsmount}    ${strategy04}    ${retention-Num3}    ${speed-Default}    ${transMode-Default}    ${options-Default}
+@{listonceim}     H3C    ${hostsonceim}    ${strategy03}    ${retention-Default}    ${speed-Default}    ${transMode-Default}    ${options-cs}
+@{listonce}       H3C    ${hostsonce}    ${strategy05}    ${retention-Default}    ${speed-Default}    ${transMode-Default}    ${options-Default}

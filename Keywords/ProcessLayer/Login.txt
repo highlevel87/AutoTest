@@ -1,0 +1,8 @@
+*** Settings ***
+Resource          ../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Login
+    [Arguments]    ${IN_unm}    ${IN_pwd}    ${IN_IP}    ${IN_browser}=chrome    ${IN_protocal}=http
+    Open Server    ${IN_IP}    ${IN_protocal}    ${IN_browser}
+    User Login    ${IN_unm}    ${IN_pwd}

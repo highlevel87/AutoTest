@@ -1,0 +1,4 @@
+*** Variables ***
+${login_unm_tbox}    id=txt_username
+${login_pwd_tbox}    id=txt_password
+${login_btn}      xpath=//button

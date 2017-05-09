@@ -1,0 +1,38 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Get Request File
+    [Arguments]    ${IN_num}=30    @{IN_modules}
+    [Documentation]    下载许可证请求文件
+    View Menu    ${LICENSE_request_menu}    2    ${LICENSE_menu}
+    Wait and Click Element    ${LICENSES_Req_next_btn}
+    Wait Element    ${LICENSES_Req_numset_tbox}
+    Input Text    ${LICENSES_Req_numset_tbox}    ${IN_num}
+    Wait and Click Element    ${LICENSES_Req_next_btn}
+    Wait Element    ${LICENSES_Req_module_cobox}
+    : FOR    ${module}    IN    @{IN_modules}
+    \    Select From List    ${LICENSES_Req_module_cobox}    ${module}
+    \    Wait and Click Element    ${LICENSES_Req_submodule_cobox}
+    \    Select Checkbox    ${LICENSES_Req_all_chbox}
+    \    Click Button    ${LICENSES_Req_add_btn}
+    \    Click Button    ${LICENSES_Req_add_btn}
+    \    Sleep    5
+    Click Element    ${LICENSES_Req_submit_btn}
+
+Get Key File
+    [Arguments]    ${IN_path}    ${IN_filename}
+    Open Browser    http://192.168.88.100:8889    chrome
+    Sleep    2
+    Input Text    id=usr    shij
+    Input Text    id=psw    dingjiaTest
+    Click Element    css=.btn.btn-lg.btn-primary.btn-block
+    Wait and Click Element    css=.btn.btn-primary.upload-request.develop
+    Win Choose File    ${IN_path}    ${IN_filename}
+    sleep    5
+
+Upload Key File
+    [Arguments]    ${IN_path}    ${IN_filename}
+    View Menu    ${LICENSE_license_menu}    2    ${LICENSE_menu}
+    Wait and Click Element    ${LICENSE_Lcs_upload_btn}
+    Win Choose File    ${IN_path}    ${IN_filename}

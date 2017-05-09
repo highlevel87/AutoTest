@@ -1,0 +1,39 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Select Windows Host
+    [Arguments]    ${IN_host}
+    Wait and Click Element    ${WINbak_host_item}//span[contains(text(), '${IN_host}')]
+
+Select Windows Partitions
+    [Arguments]    @{IN_partitions}
+    : FOR    ${disk}    ${partition}    IN    @{IN_partitions}
+    \    Wait and Click Element    ${WINbak_partition_chbox}//span[contains(text(), '${disk}')]/parent::a/parent::li//span[contains(text(), '${partition}')]/parent::a/parent::li/span[2]
+
+Set Windows Strategy
+    [Arguments]    @{IN_selections}
+    Click Elements    @{IN_selections}
+
+Set Windows Retention
+    [Arguments]    @{IN_retention}
+    [Documentation]    1：个数
+    ...    2：天数
+    Input Text    ${WINbak_retention_tbox}    @{IN_retention}[0]
+    Select From List    ${WINbak_retention_cobox}    @{IN_retention}[1]
+
+Set Windows Speed
+    [Arguments]    ${IN_num}
+    [Documentation]    网络：2
+    ...    加密：3
+    ...    SAN：4
+    ...    自适应：6
+    Input Text    ${WINbak_speed_tbox}    ${IN_num}
+
+Set Windows Backup Option
+    [Arguments]    @{IN_options}
+    ${status}=    Run Keyword and Return Status    Should Not Be Empty    ${IN_options[0]}
+    Run Keyword If    ${status}    Set Windows Retention    @{IN_options[0]}
+    ${status}=    Run Keyword and Return Status    Should Not Be Empty    ${IN_options[1]}
+    Run Keyword If    ${status}    Set Windows Speed    ${IN_options[1]}
+    Click Elements    @{IN_options[2]}

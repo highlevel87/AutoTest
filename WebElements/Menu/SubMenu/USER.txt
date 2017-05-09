@@ -1,0 +1,3 @@
+*** Variables ***
+${USER_user_menu}    css=a.menu-level-2[href="users.html"]
+${USER_group_menu}    css=a.menu-level-2[href="user-groups.html"]

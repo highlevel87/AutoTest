@@ -1,0 +1,127 @@
+*** Settings ***
+Resource          ../../Keywords/HeadFile/HeadFile.txt
+
+*** Test Cases ***
+create ubuntu task
+    [Setup]
+    [Timeout]
+    Login    zjl    dingjia123    192.168.2.79
+    View Menu    ${HA_manage_meun}    2    ${HA_menu}
+    Wait Element    xpath=//*[@id='cluster']    10
+    Create cluster    ddd    sdf    Windows    2008 R2
+    ${AllHost}    Create List    172    173
+    Add host    2011    @{AllHost}
+    Add Qdisk    sdf
+
+Task linux ha
+    Login    zjl    dingjia123    192.168.2.78
+    View Menu    ${HA_manage_meun}    2    ${HA_menu}
+    Sleep    5
+    Wait and Click Element    xpath=//*[@id="new_task"]
+    Wait Element    xpath=//*[@id='reg_modal_title'][contains(text(),'新建任务')]
+    ${cluster_name}    Set Variable    HAC
+    Click Element    xpath=//*[@id='choise_cluster_by_create_task']/option[contains(text(),'${cluster_name}')]
+    Sleep    2
+    ${task_name}    Set Variable    test001
+    Input Text    taskname_by_create_task    ${task_name}
+    ${task_host}    Set Variable    173
+    Click Element    xpath=//*[@id='choise_host_create_task']/option[text()='${task_host}']
+    Click Element    xpath=//*[@id='ha_server_popver_info']/div[1]/div/a[contains(text(),'选择服务')]
+    ${mysql}    Set Variable    xpath=//*[@id='collapsetwo']/div/ul/li/label/label[contains(text(),'mysql')]/parent::label/i
+    ${submysql}    Set Variable    xpath=//*[@id='collapsetwo']/div/ul/li/div/div/label[contains(text(),'mysql')]/parent::div/input
+    Comment    ${SQLSERVER}    Set Variable    xpath=//*[@id='collapsetwo']/div/ul/li/label/label[contains(text(),'SQLSERVER')]/parent::label/i
+    Comment    ${SQLBrowser}    Set Variable    xpath=//*[@id='collapsetwo']/div/ul/li/div/div/label[contains(text(),'SQLBrowser')]/parent::div/input
+    Comment    ${SQLWriter}    Set Variable    xpath=//*[@id='collapsetwo']/div/ul/li/div/div/label[contains(text(),'SQLWriter')]/parent::div/input
+    ${mysql_list}    Create List    ${mysql}    ${submysql}
+    Comment    ${sqlserver_list}    Create List    ${SQLSERVER}    ${SQLBrowser}    ${SQLWriter}
+    ${list}    Create List    @{mysql_list}
+    Click Elements    @{list}
+    #选择存储
+    Click_Elements    xpath=//*[@id='ha_choise_popover_info']/div[1]/div/a[contains(text(),'选择存储')]
+    #选择卷
+    ${Allvolume001}    Create List    J
+    Select_Task_Type    remote    PhysicalDrive7    @{Allvolume001}
+    #选择MAC
+    Select_Mac    67:f0
+    #选择IP
+    Select_IP    192.168.4.205
+    #选择网关
+    Select_Gateway    192.168.4.1
+    #选择备机
+    Select_Backup_Machine    172
+    #选择备机MAC
+    Select_Backup_Machine_MAC    6d:57
+    Click Element    xpath=//*[@id='btn_submit_create_ha_task']
+    Wait Element    xpath=//div[contains(text(),'作业创建成功')]    300
+    Click Elements    xpath=//button
+    Sleep    2
+    [Teardown]
+
+test001
+    Login    zjl    dingjia123    192.168.2.78
+    View Menu    ${HA_job_meun}    2    ${HA_menu}
+
+*** Keywords ***
+Select Task Type
+    [Arguments]    ${type}    ${disk}    @{Allvolume}
+    Run Keyword If    '${type}' == 'remote'    Remote_Task    ${disk}    @{Allvolume}
+    ...    ELSE IF    '${type}' == 'local'    Local_Task    ${disk}    @{Allvolume}
+    ...    ELSE    log    error
+
+Remote Task
+    [Arguments]    ${disk}    @{Allvolume}
+    Click_Elements    xpath=//*[@id='choise_disk_by_create_task']/div/div/ul/li[1]/a
+    Sleep    0.5
+    Click_Elements    xpath=//*[@id='ha_create_task_set_remote_disk']/ul/li/span/span[contains(text(),'${disk}')]/parent::span/i
+    : FOR    ${volume}    IN    @{Allvolume}
+    \    sleep    0.5
+    \    Click_Elements    xpath=//*[@id='ha_create_task_set_remote_disk']/ul/li/div/p/label[contains(text(),'${volume}')]/parent::p/input
+    sleep    0.5
+
+Local Task
+    [Arguments]    ${disk}    @{Allvolume}
+    Click_Elements    xpath=//*[@id='choise_disk_by_create_task']/div/div/ul/li[2]/a
+    Sleep    0.5
+    Click_Elements    xpath=//*[@id='add_back_host_by_create_task_add_li']/ul/li/span/span[contains(text(),'${disk}')]/parent::span/i
+    : FOR    ${volume}    IN    @{Allvolume}
+    \    sleep    0.5
+    \    Click_Elements    xpath=//*[@id='add_back_host_by_create_task_add_li']/ul/li/div/p/label[contains(text(),'${volume}')]/parent::p/input
+    sleep    0.5
+
+Select Mac
+    [Arguments]    ${mac}
+    Click_Elements    xpath=//*[@id='choise_mac_create_task']/option[contains(text(),'${mac}')]
+
+Select IP
+    [Arguments]    ${ip}
+    Click_Elements    xpath=//*[@id='choise_ip_by_create_ha_task']/option[contains(text(),'${ip}')]
+
+Select Gateway
+    [Arguments]    ${gateway}
+    Click_Elements    xpath=//*[@id='choise_getway_by_create_ha_task']/option[contains(text(),'${gateway}')]
+
+Select Backup Machine
+    [Arguments]    ${backup_machine}
+    Click_Elements    xpath=//*[@id='choise_back_host_by_create_task']/option[contains(text(),'${backup_machine}')]
+
+Select Backup Machine MAC
+    [Arguments]    ${backup_machine_mac}
+    Click_Elements    xpath=//*[@id='choise_mac_by_create_task']/option[contains(text(),'${backup_machine_mac}')]
+
+Select Service
+    [Arguments]    @{Service}    @{AllSub_service}
+    [Documentation]    | 描述 | 改关键字用于勾选数据库子服务 |
+    ...    | 参数 | ${Service}: 数据库名称 |
+    ...    | \ | @{AllSub_service}：子服务列表 |
+    #点击服务按钮
+    Click Element    xpath=//*[@id='ha_server_popver_info']/div[1]/div/a[contains(text(),'选择服务')]
+    sleep    1
+    : FOR    ${Service001}    IN    @{Service}
+    \    Click Element    xpath=//*[@id='collapsetwo']/div/ul/li/label/label[contains(text(),'${Service001}')]/parent::label/i
+    \    Select sub service    @{AllSub_service}
+
+Select sub service
+    [Arguments]    @{AllSub_service}
+    : FOR    ${Sub_Service}    IN    @{AllSub_service}
+    \    sleep    0.5
+    \    Click Element    xpath=//*[@id='collapsetwo']/div/ul/li/div/div/label[contains(text(),'${Sub_Service}')]/parent::div/input

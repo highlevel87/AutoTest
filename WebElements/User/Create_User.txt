@@ -1,0 +1,14 @@
+*** Variables ***
+${USER_add_btn}    xpath=.//*[@id='account-add']
+${USER_submit_btn}    css=.btn.btn-primary
+${USER_unm_tbox}    css=#txt_username_vue24
+${USER_pwd_tbox}    css=#txt_password_vue24
+${USER_re_pwd_tbox}    css=#txt_re_password_vue24
+${USER_expiration_tbox}    id=txt_password_expire_days
+${USER_email_tbox}    css=#txt_email_vue24
+${USER_phone_tbox}    css=#txt_phone_vue24
+${USER_role_admin_chbox}    xpath=.//*[@id='cb_role_admin24']
+${USER_role_user_chbox}    xpath=.//*[@id='cb_role_user24']
+${USER_role_monitor_chbox}    xpath=.//*[@id='cb_role_monitor24']
+${USER_exist_err_txt}    xpath=//*[@id='txt_username_vue24']/parent::div/span[text()='已存在']    # 用户已存在
+${USER_cancel_btn}    xpath=.//*[@id='add_user_modal']/div/div/div[3]/button[1]

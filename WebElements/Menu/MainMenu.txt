@@ -1,0 +1,14 @@
+*** Variables ***
+${BAK_menu}       css=a.menu-level-1[href="backup.html"]
+${VM_menu}        css=a.menu-level-1[href="vm-data-center.html"]
+${RE_menu}        css=a.menu-level-1[href="restore.html"]
+${WIN_menu}       css=a.menu-level-1[href="wos-task-current.html"]
+${HA_menu}        css=a.menu-level-1[href="ha-cluster-management.html"]
+${CDP_menu}       css=a.menu-level-1[href="cdp-task-current.html"]
+${level1_actived_menu}    css=ul[class="sidebar-menu"] li[class="menu-li active"] a
+${level2_actived_menu}    css=ul[class="sidebar-menu"] li[class="menu-li active"] li[class="active"] a
+${USER_menu}      css=a.menu-level-1[href="users.html"]
+${STORAGE_menu}    css=a.menu-level-1[href="storage-pool.html"]
+${RESOURCE_menu}    css=a.menu-level-1[href="resources.html"]
+${LICENSE_menu}    css=a.menu-level-1[href="licenses.html"]
+${MORE_menu}      css=.menu-group

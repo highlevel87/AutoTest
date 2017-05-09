@@ -1,0 +1,12 @@
+*** Variables ***
+${VMRestore_config_set}    xpath=.//*[@id='vm_restore_config_set']//a
+${VMRestore_self_machine}    xpath=.//*[@id='vm_retore_config_new_vm']/input
+${VMRestore_self_host}    xpath=.//*[@id='vm_retore_config_new_vm_self_host']/input
+${VMRestore_vm_type}    xpath=.//*[@name="vm_retore_config_choise_vm"]
+${VMRestore_choise_storage}    xpath=.//*[@id="vm_retore_config_choise_vm_target_choise_storage_path"]//select
+${VMRestore_oth_choise_storage}    xpath=.//*[@id="vm_restore_host_other_host_choise_storage_path"]//select
+${VMRestore_vmnm}    xpath=.//*[@id='vm_retore_config_choise_vm_target_create_alias']//input
+${VMRestore_other_vmnm}    xpath=.//*[@id='vm_restore_host_other_host_create_alias']//input
+${VMRestore_other_host}    xpath=.//*[@id='vm_restore_host_other_host_choise_host']//select
+${VMRestore_localhost}    xpath=.//*[@id='localhost_div']/ul
+${VMRestore_dir}    xpath=.//*[@id='vm_restore_restore_dir']//input

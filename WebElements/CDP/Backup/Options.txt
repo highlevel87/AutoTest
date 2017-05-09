@@ -1,0 +1,8 @@
+*** Variables ***
+${CDPbak_bakmode_cobox}    xpath=//*[@id='modelselect']    #备份选项
+${CDPbak_immediate_chbox}    xpath=//*[@id='Immediatestart']    #立即启动
+${CDPbak_time_chbox}    xpath=//*[@id='selecttime']    #定时启动
+${CDPbak_dedup_chbox}    xpath=//*[@id='select_deduplication']    #重删
+${CDPbak_local_chbox}    xpath=//*[@id='select_local_storage']    #本地存储
+${CDPbak_retetion_tbox}    xpath=//*[@id='retention_strategy']/div/div/input
+${CDPbak_taskname_tbox}    xpath=//*[@id='cdptaskname']    #作业名

@@ -1,0 +1,2 @@
+*** Variables ***
+${CDPbak_partition_chbox}    xpath=//*[@id='disk_tree']//ul    #分区

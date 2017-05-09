@@ -1,0 +1,3 @@
+*** Variables ***
+${VMRestore_type}    xpath=.//*[@id='vm_restore_restore_source_restore_type']//span
+${VMRestore_vCenter_type}    xpath=.//*[@id='vm_restore_restore_source_vm_type']//span

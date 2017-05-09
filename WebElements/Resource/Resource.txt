@@ -1,0 +1,6 @@
+*** Variables ***
+${RESOURCE_rsc_list_item}    xpath=.//*[@id='host_list']
+${RESOURCE_rsc_auth_btn}    css=.authorize.op_btn
+${RESOURCE_rsc_grp_cobox}    css=.ms-choice
+${RESOURCE_rsc_all_chbox}    xpath=.//li[1]//input
+${RESOURCE_rsc_submit_btn}    css=.btn-authorization-submit

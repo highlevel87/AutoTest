@@ -1,0 +1,2 @@
+*** Variables ***
+${LICENSE_Lcs_upload_btn}    css=#licenses_upload

@@ -1,0 +1,34 @@
+*** Settings ***
+Resource          ../../../Keywords/HeadFile/HeadFile.txt
+Resource          Options-CNware.txt
+
+*** Test Cases ***
+Login zc-78
+    ${count}    Set Variable    0
+    ${round}    Set Variable    0
+    : FOR    ${ii}    IN RANGE    100
+    \    Run Keyword and Ignore Error    Login    zc    dingjia123    192.168.2.170    chrome
+    \    ${status}    Run Keyword and Return Status    Wait Element    CSS=#storage_server_area    10
+    \    log    ${ii}
+    \    Run Keyword Unless    ${status}    Continue For Loop
+    \    ${count}    Evaluate    ${count}+1
+    \    Close Browser
+    Close All Browsers
+
+Login yx-170
+    Login    yx    dingjia123    192.168.2.170    chrome
+
+Login yx-53
+    Login    yx    dingjia123    192.168.2.53    chrome
+
+Create PT Job
+    Create VM Backup Job    CNware252普通-立即-时间-2天    @{CNware001}
+
+Create CS Job
+    Create VM Backup Job    CNware252重删-立即一次性    @{CNware002}
+
+*** Keywords ***
+CountPlus
+    [Arguments]    ${count}
+    ${count}    Evaluate    ${count}+1
+    [Return]    ${count}

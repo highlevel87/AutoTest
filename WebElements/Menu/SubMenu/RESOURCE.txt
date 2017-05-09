@@ -1,0 +1,3 @@
+*** Variables ***
+${RESOURCE_resource_menu}    css=a.menu-level-2[href="resources.html"]
+${RESOURCE_Storage_menu}    css=a.menu-level-2[href="storage-server.html"]

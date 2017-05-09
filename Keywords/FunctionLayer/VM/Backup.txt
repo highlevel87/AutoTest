@@ -1,0 +1,37 @@
+*** Settings ***
+Resource          ../../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Select vCenter
+    [Arguments]    ${IN_vcenter}
+    [Documentation]    需要输入完整的虚拟机名：
+    ...    | VMware |
+    ...    | Xen |
+    ...    | KVM |
+    ...    | Hyper-V |
+    ...    | Citrix XenServer |
+    ...    | FusionCompute |
+    ...    | H3C CAS |
+    ...    | OpenStack |
+    Wait and Click Element    ${VMbak_vcenter_items}//span[contains(text(), '${IN_vcenter}')]
+
+Select VM Hosts
+    [Arguments]    @{hosts}
+    : FOR    ${hostName}    IN    @{hosts}
+    \    Wait and Click Element    ${VMbak_hosts_chbox}//span[text()='${hostName}']/parent::a/parent::li/span[2]
+
+Set VM Strategy
+    [Arguments]    @{selections}
+    Click Elements    @{selections}
+
+Set VM Retention
+    [Arguments]    ${IN_num}    ${IN_way}
+    [Documentation]    1：个数
+    ...    2：天数
+    Input Text    ${VMbak_retention_tbox}    ${IN_num}
+    Select From List    ${VMbak_retention_cobox}    ${IN_way}
+
+Click Complete Button
+    Wait Element    ${VMbak_complete_tbox}
+    ${status}    Run Keyword and Return Status    Element Text Should Be    ${VMbak_complete_tbox}    作业创建成功，是否跳转到作业页面
+    Run Keyword If    ${status}    Click Element    ${VMbak_complete_btn}

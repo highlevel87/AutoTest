@@ -1,0 +1,32 @@
+*** Settings ***
+Suite Teardown    Close Browser
+Resource          ../../../Keywords/HeadFile/HeadFile.txt
+Resource          VMware.txt
+
+*** Test Cases ***
+Login yx
+    [Tags]    auto
+    Login    yx    dingjia123    ${host}    ff
+
+Create PT Backup Job
+    [Tags]    auto
+    Create VM Backup Job    VMware91普通-立即-时间-不保留快照-2天    @{VMware001}
+
+Create YS Backup Job
+    [Tags]    auto
+    Create VM Backup Job    VMware91压缩-立即-时间-3个    @{VMware002}
+
+Create GZ Backup Job
+    [Tags]    auto
+    Create VM Backup Job    VMware91挂载-立即-一次性-13M    @{VMware003}
+
+Create CS Backup Job
+    [Tags]    auto
+    Create VM Backup Job    VMware91重删-时间    @{VMware004}
+
+Create MULTI Backup Job
+    Create VM Backup Job    VMware91多虚拟机    @{VMware006}
+
+Create SAN Backup Job
+    Login    zc    dingjia123    192.168.2.79    chrome
+    Create VM Backup Job    VMware186SAN-一次性    @{VMware005}

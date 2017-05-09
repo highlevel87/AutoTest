@@ -1,0 +1,11 @@
+*** Settings ***
+Resource          User/User.txt
+Resource          Login.txt
+Resource          Common/Processes.txt
+Resource          VM/Backup.txt
+Resource          VM/Regist.txt
+Resource          CDP/Backup.txt
+Resource          WIN/Backup.txt
+Resource          HAC/cluster_operation.txt
+Resource          LICENSE/License.txt
+Resource          VM/Restore.txt

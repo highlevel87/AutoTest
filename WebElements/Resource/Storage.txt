@@ -1,0 +1,5 @@
+*** Variables ***
+${RESOURCE_Sto_unreg_txt}    css=.orange
+${RESOURCE_Sto_registed_txt}    css=.green
+${RESOURCE_Sto_regist_btn}    css=.ctrl-registered
+${RESOURCE_Sto_submit_btn}    css=.dialog-ok

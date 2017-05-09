@@ -1,0 +1,15 @@
+*** Settings ***
+Documentation     | @{strategy01} | 立即-时间策略-不保留快照-默认完备启动时间 |
+...               | @{strategy02} | 立即-时间策略-默认完备启动时间 |
+...               | @{strategy03} | 立即-一次性 |
+...               | @{strategy04} | 时间策略-默认完备启动时间 |
+...               | @{strategy05} | 一次性 |
+Resource          Options.txt
+
+*** Variables ***
+@{hosts-pt}       WinServer-Testnewnew    WinServer-Test.0419    # 普通
+@{hosts-cs}       WinServer-Test-csnew    # 重删
+@{CNware001}      CNware    ${hosts-pt}    ${strategy02}    ${retention-Day2}    ${speed-Default}    ${transMode-Default}    ${options-Default}
+...               # CNware252普通-立即-时间-2天
+@{CNware002}      CNware    ${hosts-cs}    ${strategy03}    ${retention-Default}    ${speed-Default}    ${transMode-Default}    ${options-cs}
+...               # CNware252重删-立即一次性

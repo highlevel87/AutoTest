@@ -1,0 +1,28 @@
+*** Settings ***
+Resource          ../HeadFile/HeadFile.txt
+
+*** Keywords ***
+Open Server
+    [Arguments]    ${IN_IP}    ${IN_protocal}=http    ${IN_browser}=chrome
+    [Documentation]    用途：启动浏览器并访问迪备Web界面，默认启动chrome浏览器，使用http访问web界面。
+    ...
+    ...    范例
+    ...
+    ...    | Open Server | 192.168.2.10 \ |
+    ...    | Open Server | 192.168.2.10 \ | https |
+    ...    | Open Server | 192.168.2.10 \ | https | firefox |
+    Open Browser    ${IN_protocal}://${IN_IP}    ${IN_browser}
+    Maximize Browser Window
+
+User Login
+    [Arguments]    ${IN_unm}    ${IN_pwd}
+    [Documentation]    用途： 登录迪备备份服务器，登录前需先调用Open Server函数打开Web界面。
+    ...
+    ...    范例
+    ...
+    ...    | User Login | username | password |
+    Wait Element    ${login_unm_tbox}
+    Input Text    ${login_unm_tbox}    ${IN_unm}
+    Input Text    ${login_pwd_tbox}    ${IN_pwd}
+    sleep    1
+    Press Key    ${login_btn}    \\13
